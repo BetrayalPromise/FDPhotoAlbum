@@ -1,0 +1,21 @@
+PODS:
+  - SweetAutoLayout (0.1.0)
+
+DEPENDENCIES:
+  - SweetAutoLayout (from `https://github.com/BetrayalPromise/SweetAutoLayout.git`)
+
+EXTERNAL SOURCES:
+  SweetAutoLayout:
+    :git: https://github.com/BetrayalPromise/SweetAutoLayout.git
+
+CHECKOUT OPTIONS:
+  SweetAutoLayout:
+    :commit: 795653e0f334c71ef1360fd61074e72061bd1568
+    :git: https://github.com/BetrayalPromise/SweetAutoLayout.git
+
+SPEC CHECKSUMS:
+  SweetAutoLayout: 964750e9717680450bd6054dc249485a2b361e01
+
+PODFILE CHECKSUM: 1b3e728e96d427a9d487c78f895b582a0a76d968
+
+COCOAPODS: 1.6.1
