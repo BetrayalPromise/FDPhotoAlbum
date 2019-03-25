@@ -12,6 +12,8 @@ class FDAssetCell: UICollectionViewCell {
     private var showImageView: UIImageView?
     /// 选择按钮
     private var selectButton: UIButton?
+    /// 数量标签
+    private var countLabel: UILabel?
     /// 对应的model
     weak var model: FDAssetModel?
     var delegate: FDAssetCellSelectProtocal?
@@ -27,6 +29,7 @@ class FDAssetCell: UICollectionViewCell {
         self.contentView.addSubview(showImageView)
         self.showImageView = showImageView
         showImageView.translatesAutoresizingMaskIntoConstraints = false
+        showImageView.contentMode = .scaleToFill
         
         let selectButton: UIButton = UIButton.init(frame: .zero)
         self.contentView.addSubview(selectButton)
@@ -37,6 +40,12 @@ class FDAssetCell: UICollectionViewCell {
         selectButton.layer.cornerRadius = 10
         selectButton.layer.masksToBounds = true
         
+        let countLabel: UILabel = UILabel(frame: .zero)
+        self.contentView.addSubview(countLabel)
+        self.countLabel = countLabel
+        countLabel.translatesAutoresizingMaskIntoConstraints = false
+        countLabel.font = UIFont.systemFont(ofSize: 12)
+        
         (showImageView.top == self.contentView.top).isActive = true
         (showImageView.left == self.contentView.left).isActive = true
         (showImageView.bottom == self.contentView.bottom).isActive = true
@@ -46,6 +55,9 @@ class FDAssetCell: UICollectionViewCell {
         (selectButton.right == self.contentView.right - 5).isActive = true
         (selectButton.width == 20).isActive = true
         (selectButton.height == 20).isActive = true
+        
+        (countLabel.centerX == selectButton.centerX).isActive = true
+        (countLabel.centerY == selectButton.centerY).isActive = true
     }
     
     func configure(model: FDAssetModel?) {
@@ -53,7 +65,7 @@ class FDAssetCell: UICollectionViewCell {
         self.model = model
         let option: PHImageRequestOptions = PHImageRequestOptions()
         option.isSynchronous = true
-        PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 100, height: 100), contentMode: PHImageContentMode.aspectFit, options: option) { [weak self] (image, info) in
+        PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
             guard let `self` = self else { return }
             self.showImageView?.image = image
         }
@@ -70,9 +82,11 @@ class FDAssetCell: UICollectionViewCell {
     
     func updateStatus() {
         if self.model?.isSelected ?? false {
-            selectButton?.backgroundColor = .yellow
+            self.selectButton?.backgroundColor = .yellow
+            self.countLabel?.text = "\(self.model?.selectedCount ?? 0)"
         } else {
-            selectButton?.backgroundColor = .red
+            self.selectButton?.backgroundColor = .red
+            self.countLabel?.text = nil
         }
     }
 }

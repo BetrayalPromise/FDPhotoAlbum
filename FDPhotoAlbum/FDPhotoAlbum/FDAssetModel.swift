@@ -29,7 +29,7 @@ public class FDAssetModel: NSObject {
     public var asset: PHAsset?
     public var duration: String?
     public var suffix: String?
-    public var selectedCount: Int?
+    public var selectedCount: Int = 0
     public var isSelected: Bool = false
     convenience init(asset: PHAsset?, duration: String?, suffix: String?) {
         self.init()

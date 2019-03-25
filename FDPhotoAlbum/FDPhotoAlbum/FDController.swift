@@ -145,6 +145,7 @@ extension FDCollectionController: UITableViewDataSource {
 ///
 class FDAssetController: UIViewController {
     var models: [FDAssetModel]?
+    var collection: UICollectionView?
     convenience init(models: [FDAssetModel]?) {
         self.init()
         self.models = models
@@ -155,6 +156,7 @@ class FDAssetController: UIViewController {
         self.view.backgroundColor = .white
         let collection: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: FDLeftFlowLayout())
         self.view.addSubview(collection)
+        self.collection = collection
         collection.backgroundColor = .white
         collection.delegate = self
         collection.dataSource = self
@@ -216,20 +218,38 @@ extension FDAssetController: UICollectionViewDelegateFlowLayout {
 extension FDAssetController: FDAssetCellSelectProtocal {
     func select(by cell: FDAssetCell, with model: FDAssetModel?) {
         guard let `model` = model else { return }
+        guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
         if model.isSelected == true {
             /// 取消
+            let deleteValue: Int = model.selectedCount
+            for m in self.models ?? [] {
+                let selectedCount: Int = m.selectedCount
+                if selectedCount > deleteValue {
+                    m.selectedCount -= 1
+                }
+            }
             model.isSelected = false
-            cell.updateStatus()
+            model.selectedCount = 0
+            for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
+                c.updateStatus()
+            }
         } else {
             /// 选中
-            model.isSelected = true
             var value = 0
             for m in models ?? [] {
                 if m.isSelected {
                     value += 1
                 }
             }
-            cell.updateStatus()
+            if controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 <= value {
+                print("选中超过最大值")
+                return
+            }
+            model.isSelected = true
+            model.selectedCount = value + 1
+            for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
+                c.updateStatus()
+            }
         }
     }
 }
