@@ -2,21 +2,11 @@ import UIKit
 import Photos
 import SweetAutoLayout
 
-class FDAlbumsContainerController: UIViewController {
-    
-    private lazy var currentDataSouce =  {
-        DataSource.init(filter: self)
-    }()
-    
-    private var configation: FDConfiguration?
+/// PHCollection展示
+class FDCollectionController: UIViewController {
     /// 列表数据源
     private var list: [FDAlbumModel]?
     private var table: UITableView?
-
-    convenience init(configation: FDConfiguration) {
-        self.init()
-        self.configation = configation
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +41,7 @@ class FDAlbumsContainerController: UIViewController {
     
     /// 获取数据
     private func getDatas() {
-        self.currentDataSouce.getAlbums { (models) in
+        DataSource.getAlbums { (models) in
             print(models)
             self.list = models
             self.table?.reloadData()
@@ -127,19 +117,19 @@ class FDAlbumsContainerController: UIViewController {
     }
 }
 
-extension FDAlbumsContainerController: DataSourceFilterProtocal {
-    func support() -> [PHAssetMediaType] {
-        return [.image, .video, .audio]
-    }
+extension FDCollectionController: DataSourceFilterProtocal {
+
 }
 
-extension FDAlbumsContainerController: UITableViewDelegate {
+/// PHAsset展示
+extension FDCollectionController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(self.list?[indexPath.row].models?.count ?? 0)
+        let controller = FDAssetController(models: self.list?[indexPath.row].models)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-extension FDAlbumsContainerController: UITableViewDataSource {
+extension FDCollectionController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.list?.count ?? 0
     }
@@ -149,5 +139,97 @@ extension FDAlbumsContainerController: UITableViewDataSource {
         cell.textLabel?.text = self.list?[indexPath.row].name ?? ""
         cell.detailTextLabel?.text = "\(self.list?[indexPath.row].models?.count ?? 0)"
         return cell
+    }
+}
+
+///
+class FDAssetController: UIViewController {
+    var models: [FDAssetModel]?
+    convenience init(models: [FDAssetModel]?) {
+        self.init()
+        self.models = models
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+        let collection: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: FDLeftFlowLayout())
+        self.view.addSubview(collection)
+        collection.backgroundColor = .white
+        collection.delegate = self
+        collection.dataSource = self
+        collection.alwaysBounceVertical = true
+        collection.register(FDAssetCell.self, forCellWithReuseIdentifier: NSStringFromClass(FDAssetCell.self))
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            (collection.top == self.view.safeAreaLayoutGuide.top).isActive = true
+            (collection.left == self.view.safeAreaLayoutGuide.left).isActive = true
+            (collection.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
+            (collection.right == self.view.safeAreaLayoutGuide.right).isActive = true
+        } else {
+            (collection.top == self.topLayoutGuide.bottom).isActive = true
+            (collection.left == self.view.left).isActive = true
+            (collection.bottom == self.bottomLayoutGuide.top).isActive = true
+            (collection.right == self.view.right).isActive = true
+        }
+    }
+}
+
+
+extension FDAssetController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+}
+
+extension FDAssetController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.models?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NSStringFromClass(FDAssetCell.self), for: indexPath) as? FDAssetCell
+        cell?.delegate = self
+        cell?.configure(model: models?[indexPath.row])
+        return cell ?? FDAssetCell()
+    }
+}
+
+extension FDAssetController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.frame.width - 10 - 3 * 3) / 4.0, height: (collectionView.frame.width - 10 - 3 * 3) / 4.0)
+    }
+}
+
+extension FDAssetController: FDAssetCellSelectProtocal {
+    func select(by cell: FDAssetCell, with model: FDAssetModel?) {
+        guard let `model` = model else { return }
+        if model.isSelected == true {
+            /// 取消
+            model.isSelected = false
+            cell.updateStatus()
+        } else {
+            /// 选中
+            model.isSelected = true
+            var value = 0
+            for m in models ?? [] {
+                if m.isSelected {
+                    value += 1
+                }
+            }
+            cell.updateStatus()
+        }
     }
 }

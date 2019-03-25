@@ -11,12 +11,13 @@
 		5F2247ED475D9A97ED21B2BDD223FB1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2EAFEE17FD2C6AC824A884EFA7A4 /* AppDelegate.swift */; };
 		738D2D1F8B3F543319B7EDE5FCF2D609 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6652091F0FBE29B93DAFEFF9B5DA87BB /* Assets.xcassets */; };
 		7E8CB04E892D005FB6BDA9D8 /* Pods_FDPhotoAlbum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0C2E90182538666DF14213 /* Pods_FDPhotoAlbum.framework */; };
-		917C2ECF76759EDBDF7DF8F7361167E1 /* PHAssetUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886A948A5A6C23B8C692E54C401007B8 /* PHAssetUtils.swift */; };
 		98021D6B78B7FD8F058A532E080F3586 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63557EFD6FDFCEAAE79BADA1EABAB7D0 /* ViewController.swift */; };
-		CFF0441D53E467FEE6A00C29764F1AA1 /* FDConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E343361371E98ED616CC737866724A /* FDConfigure.swift */; };
 		D73089143F2C145E97AFF05A7F62D51D /* FDImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D71EE35CDA6954A9E4AF6B23B1624E /* FDImagePickerController.swift */; };
 		D77CEFBF754A7A7E1CA052ED3699B826 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1D98C705A147B9B43F7C4DCAECFCF53 /* LaunchScreen.storyboard */; };
 		F7483CD72244A8EC00E8B2BA /* FDAssetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CD62244A8EC00E8B2BA /* FDAssetModel.swift */; };
+		F7483CDD22487FA400E8B2BA /* FDLeftFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CDC22487FA400E8B2BA /* FDLeftFlowLayout.swift */; };
+		F7483CDF2248802600E8B2BA /* FDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CDE2248802600E8B2BA /* FDCell.swift */; };
+		F7483CE122489C5600E8B2BA /* FDAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CE022489C5600E8B2BA /* FDAlbum.swift */; };
 		F78B9A432240945100076FB0 /* ButtonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78B9A422240945100076FB0 /* ButtonUtils.swift */; };
 		F99E0B5B1A27D729F5111167E456E73D /* FDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE61A98EE50146FB97063B856BA414 /* FDController.swift */; };
 		FA771B98631F501E6093A94E6B64F20A /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D7FCE9810EB6D62035ED0099E7B1CE /* DataSource.swift */; };
@@ -32,13 +33,14 @@
 		63557EFD6FDFCEAAE79BADA1EABAB7D0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6652091F0FBE29B93DAFEFF9B5DA87BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		69837F845437D8579C4F2708 /* Pods-FDPhotoAlbum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FDPhotoAlbum.debug.xcconfig"; path = "Target Support Files/Pods-FDPhotoAlbum/Pods-FDPhotoAlbum.debug.xcconfig"; sourceTree = "<group>"; };
-		87E343361371E98ED616CC737866724A /* FDConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDConfigure.swift; sourceTree = "<group>"; };
-		886A948A5A6C23B8C692E54C401007B8 /* PHAssetUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHAssetUtils.swift; sourceTree = "<group>"; };
 		8DBE61A98EE50146FB97063B856BA414 /* FDController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDController.swift; sourceTree = "<group>"; };
 		94539966C8C452C918A9424D6EEFEA1A /* FDPhotoAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FDPhotoAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C2E90182538666DF14213 /* Pods_FDPhotoAlbum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FDPhotoAlbum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3790DA6B9F1107952C31A350F8EB0A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F7483CD62244A8EC00E8B2BA /* FDAssetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDAssetModel.swift; sourceTree = "<group>"; };
+		F7483CDC22487FA400E8B2BA /* FDLeftFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FDLeftFlowLayout.swift; sourceTree = "<group>"; };
+		F7483CDE2248802600E8B2BA /* FDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDCell.swift; sourceTree = "<group>"; };
+		F7483CE022489C5600E8B2BA /* FDAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDAlbum.swift; sourceTree = "<group>"; };
 		F78B9A422240945100076FB0 /* ButtonUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,11 +112,12 @@
 			isa = PBXGroup;
 			children = (
 				44D7FCE9810EB6D62035ED0099E7B1CE /* DataSource.swift */,
-				87E343361371E98ED616CC737866724A /* FDConfigure.swift */,
+				F7483CDC22487FA400E8B2BA /* FDLeftFlowLayout.swift */,
 				8DBE61A98EE50146FB97063B856BA414 /* FDController.swift */,
 				28D71EE35CDA6954A9E4AF6B23B1624E /* FDImagePickerController.swift */,
-				886A948A5A6C23B8C692E54C401007B8 /* PHAssetUtils.swift */,
 				F7483CD62244A8EC00E8B2BA /* FDAssetModel.swift */,
+				F7483CDE2248802600E8B2BA /* FDCell.swift */,
+				F7483CE022489C5600E8B2BA /* FDAlbum.swift */,
 			);
 			path = FDPhotoAlbum;
 			sourceTree = "<group>";
@@ -232,13 +235,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F2247ED475D9A97ED21B2BDD223FB1B /* AppDelegate.swift in Sources */,
+				F7483CE122489C5600E8B2BA /* FDAlbum.swift in Sources */,
 				F78B9A432240945100076FB0 /* ButtonUtils.swift in Sources */,
 				F7483CD72244A8EC00E8B2BA /* FDAssetModel.swift in Sources */,
 				FA771B98631F501E6093A94E6B64F20A /* DataSource.swift in Sources */,
-				CFF0441D53E467FEE6A00C29764F1AA1 /* FDConfigure.swift in Sources */,
+				F7483CDD22487FA400E8B2BA /* FDLeftFlowLayout.swift in Sources */,
+				F7483CDF2248802600E8B2BA /* FDCell.swift in Sources */,
 				F99E0B5B1A27D729F5111167E456E73D /* FDController.swift in Sources */,
 				D73089143F2C145E97AFF05A7F62D51D /* FDImagePickerController.swift in Sources */,
-				917C2ECF76759EDBDF7DF8F7361167E1 /* PHAssetUtils.swift in Sources */,
 				98021D6B78B7FD8F058A532E080F3586 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

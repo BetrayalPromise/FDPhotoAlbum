@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     
     @objc
     func handle(button: UIButton) {
-        self.present(FDImagePickerController(configure: FDConfiguration()), animated: true, completion: nil)
+        self.present(FDImagePickerController(multiple: true), animated: true, completion: nil)
     }
     
 }

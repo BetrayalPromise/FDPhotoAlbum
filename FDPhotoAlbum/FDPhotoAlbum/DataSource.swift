@@ -1,14 +1,20 @@
 import Foundation
 import Photos
 
-protocol DataSourceFilterProtocal: class {
-    func support() -> [PHAssetMediaType]
+public protocol DataSourceFilterProtocal: class {
+    /// 过滤支持的的类型 即为支持的类型
+    func filerType() -> [PHAssetMediaType]
+    /// 过滤没有数据的Collection 默认过滤掉
+    func filerEmptyCollection() -> Bool
 }
 
 /// 默认全部支持
 extension DataSourceFilterProtocal {
-    func support() -> [PHAssetMediaType] {
+    func filerType() -> [PHAssetMediaType] {
         return [.image, .video, .audio]
+    }
+    func filerEmptyCollection() -> Bool {
+        return true
     }
 }
 
@@ -24,23 +30,19 @@ class DataSource: NSObject {
         
     }
     
-    public func getAlbums(complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
+    public class func getAlbums(complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
         let myPhotoStream = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumMyPhotoStream, options: nil)
         let smartAlbum = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
         let topLevelUserCollections = PHCollectionList.fetchTopLevelUserCollections(with: nil)
         let albumSyncedAlbum = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumSyncedAlbum, options: nil)
         let albumCloudShared = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumCloudShared, options: nil)
         let allAlbums = [myPhotoStream, smartAlbum, topLevelUserCollections, albumSyncedAlbum, albumCloudShared]
-
         let option: PHFetchOptions = PHFetchOptions()
         var datas: [FDAlbumModel] = []
         for album in allAlbums {
-            if !album.isKind(of: PHFetchResult<PHAssetCollection>.classForCoder()) {
-                continue
-            }
-            let result = album as? PHFetchResult<PHAssetCollection>
-            result?.enumerateObjects({ (collection, index, stop) in
-                let fetchs: PHFetchResult<PHAsset> = PHAsset.fetchAssets(with: option)
+            if !album.isKind(of: PHFetchResult<PHAssetCollection>.classForCoder()) { continue }
+            (album as? PHFetchResult<PHAssetCollection>)?.enumerateObjects({ (collection, index, stop) in
+                let fetchs: PHFetchResult<PHAsset> = PHAsset.fetchAssets(in: collection, options: option)
                 if fetchs.count < 1 {
                     return
                 }
@@ -52,17 +54,9 @@ class DataSource: NSObject {
             })
         }
         complete(datas)
-//        let option = PHImageRequestOptions()
-//        option.resizeMode = .exact
-//        option.isSynchronous = true
-//        var datas: [FDAssetModel] = []
-//        PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil).enumerateObjects { (asset, index, stop) in
-//            datas.append(self.assetModel(with: asset))
-//        }
-//        complete()
     }
     
-    public func getAssets(from result: PHFetchResult<PHAsset>, complete: @escaping ((_ datas: Array<FDAssetModel>?) -> Void)) {
+    public class func getAssets(from result: PHFetchResult<PHAsset>, complete: @escaping ((_ datas: Array<FDAssetModel>?) -> Void)) {
         var assets: [FDAssetModel] = []
         result.enumerateObjects { (asset, index, stop) in
             assets.append(self.assetModel(with: asset))
@@ -73,14 +67,14 @@ class DataSource: NSObject {
 
 /// 转Model
 extension DataSource {
-    public func assetModel(with asset: PHAsset) -> FDAssetModel {
+    public class func assetModel(with asset: PHAsset) -> FDAssetModel {
         let suffix = self.assetSuffix(asset: asset)
         let duration = self.duration(with: Int(asset.duration))
         let model = FDAssetModel(asset: asset, duration: duration, suffix: suffix)
         return model
     }
     
-    public func albumModel(result: PHFetchResult<PHAsset>, name: String?, isCameraRoll: Bool) -> FDAlbumModel {
+    public class func albumModel(result: PHFetchResult<PHAsset>, name: String?, isCameraRoll: Bool) -> FDAlbumModel {
         let model = FDAlbumModel()
         model.result = result
         model.name = name
@@ -88,12 +82,12 @@ extension DataSource {
         return model
     }
     
-    public func assetSuffix(asset: PHAsset) -> String? {
+    public class func assetSuffix(asset: PHAsset) -> String? {
         guard let fileName = asset.value(forKey: "filename") as? String else { return nil }
         return fileName.components(separatedBy: ".").last?.lowercased() ?? nil
     }
     
-    public func duration(with time: Int) -> String {
+    public class func duration(with time: Int) -> String {
         var minString: String
         var secString: String
         if time < 10 {
