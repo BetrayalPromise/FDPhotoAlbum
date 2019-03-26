@@ -1,35 +1,7 @@
 import Foundation
 import Photos
 
-public protocol DataSourceFilterProtocal: class {
-    /// 过滤支持的的类型 即为支持的类型
-    func filerType() -> [PHAssetMediaType]
-    /// 过滤没有数据的Collection 默认过滤掉
-    func filerEmptyCollection() -> Bool
-}
-
-/// 默认全部支持
-extension DataSourceFilterProtocal {
-    func filerType() -> [PHAssetMediaType] {
-        return [.image, .video, .audio]
-    }
-    func filerEmptyCollection() -> Bool {
-        return true
-    }
-}
-
 class DataSource: NSObject {
-    
-    private var filter: DataSourceFilterProtocal?
-    convenience init(filter: DataSourceFilterProtocal) {
-        self.init()
-        self.filter = filter
-    }
-    
-    override init() {
-        
-    }
-    
     public class func getAlbums(complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
         let myPhotoStream = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumMyPhotoStream, options: nil)
         let smartAlbum = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
@@ -43,9 +15,6 @@ class DataSource: NSObject {
             if !album.isKind(of: PHFetchResult<PHAssetCollection>.classForCoder()) { continue }
             (album as? PHFetchResult<PHAssetCollection>)?.enumerateObjects({ (collection, index, stop) in
                 let fetchs: PHFetchResult<PHAsset> = PHAsset.fetchAssets(in: collection, options: option)
-                if fetchs.count < 1 {
-                    return
-                }
                 if collection.assetCollectionSubtype == .smartAlbumUserLibrary {
                     datas.insert(self.albumModel(result: fetchs, name: collection.localizedTitle, isCameraRoll: true), at: 0)
                 } else {

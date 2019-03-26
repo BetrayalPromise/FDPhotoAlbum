@@ -1,11 +1,3 @@
-//
-//  FDLeftFlowLayout.swift
-//  FDUIKit
-//
-//  Created by Chunyang Li 李春阳 on 2019/3/7.
-//  Copyright © 2019 Yongpeng Zhu 朱永鹏. All rights reserved.
-//
-
 import UIKit
 
 extension UICollectionViewLayoutAttributes {

@@ -3,16 +3,22 @@ import Photos
 
 public protocol FDImagePickerControllerDelegate: class {
     /// 点击选中变化回调
-    func imagePicker(_ imagePicker: FDImagePickerController, changedSelectedModel model: FDAssetModel?, selectedCount: Int, max: Int)
+    func imagePicker(_ imagePicker: FDImagePickerController, changedSelectedModel model: FDAssetModel?)
 }
 
 public protocol FDImagePickerControllerDataSource: class {
     /// 最大选择数量
-    func imagePickerMaxSelectedCount(_ imagePicker: FDImagePickerController) -> Int
-    /// 支持的格式 例如 mp4
-    func imagePickerSupportType() -> [String]
+    func imagePickerMaxSelectedCount() -> Int
     /// 是否开启记录功能 默认关闭
-    func imagePickerStartRecord(_ imagePicker: FDImagePickerController) -> Bool
+    func imagePickerStartRecord() -> Bool
+    /// 是否过滤控制的集合
+    func imagePickerFilerEmptyCollection() -> Bool
+}
+
+extension FDImagePickerControllerDelegate {
+    func imagePicker(_ imagePicker: FDImagePickerController, changedSelectedModel model: FDAssetModel?) {
+        
+    }
 }
 
 extension FDImagePickerControllerDelegate {
@@ -20,8 +26,12 @@ extension FDImagePickerControllerDelegate {
         return 9
     }
     
-    func imagePickerStartRecord(_ imagePicker: FDImagePickerController) -> Bool {
+    func imagePickerStartRecord() -> Bool {
         return false
+    }
+    
+    func imagePickerFilerEmptyCollection() -> Bool {
+        return true
     }
 }
 

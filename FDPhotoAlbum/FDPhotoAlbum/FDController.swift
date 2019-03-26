@@ -8,15 +8,9 @@ class FDCollectionController: UIViewController {
     private var list: [FDAlbumModel]?
     private var table: UITableView?
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "A", style: UIBarButtonItem.Style.done, target: self, action: #selector(handle(barButtonItem:)))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Ablum.bundle/icon_back"), style: .done, target: self, action: #selector(handle(barButtonItem:)))
        
         let currentStatus = PHPhotoLibrary.authorizationStatus()
         switch currentStatus {
@@ -54,7 +48,19 @@ class FDCollectionController: UIViewController {
     /// 获取数据
     private func getDatas() {
         DataSource.getAlbums { (models) in
-            self.list = models
+            guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
+            if controller.imagePickerDataSource?.imagePickerFilerEmptyCollection() ?? true {
+                self.list = models.filter({ (m) -> Bool in
+                    if m.models?.count ?? 0 > 0 {
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+            } else {
+                self.list = models
+            }
+            
             if pthread_main_np() != 0 {
                 self.table?.reloadData()
             } else {
@@ -134,14 +140,13 @@ class FDCollectionController: UIViewController {
     }
 }
 
-extension FDCollectionController: DataSourceFilterProtocal {
-
-}
-
 /// PHAsset展示
 extension FDCollectionController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = FDAssetController(models: self.list?[indexPath.row].models)
+        controller.selectedModels = { models in
+
+        }
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -164,6 +169,7 @@ class FDAssetController: UIViewController {
     var models: [FDAssetModel]?
     var collection: UICollectionView?
     weak var ownNavigationController: UINavigationController?
+    var selectedModels: (([FDAssetModel]) -> Void)?
     
     convenience init(models: [FDAssetModel]?) {
         self.init()
@@ -172,6 +178,9 @@ class FDAssetController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Ablum.bundle/icon_back"), style: .done, target: self, action: #selector(handle(barButtonItem:)))
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         self.ownNavigationController = self.navigationController
         self.view.backgroundColor = .white
@@ -197,9 +206,14 @@ class FDAssetController: UIViewController {
         }
     }
     
+    @objc
+    func handle(barButtonItem: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     deinit {
         guard let controller: FDImagePickerController = self.ownNavigationController as? FDImagePickerController else { return }
-        if controller.imagePickerDataSource?.imagePickerStartRecord(controller) ?? false {
+        if controller.imagePickerDataSource?.imagePickerStartRecord() ?? false {
             self.models?.forEach({ (m) in
                 m.isSelected = false
                 m.selectedCount = 0
@@ -208,6 +222,9 @@ class FDAssetController: UIViewController {
     }
 }
 
+extension FDAssetController: UIGestureRecognizerDelegate {
+    
+}
 
 extension FDAssetController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -257,7 +274,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 value += 1
             }
         }
-        if controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 <= value {
+        if controller.imagePickerDataSource?.imagePickerMaxSelectedCount() ?? 9 <= value {
             return true
         } else {
             return false
@@ -278,6 +295,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
             }
             model.isSelected = false
             model.selectedCount = 0
+            controller.imagePickerDelegate?.imagePicker(controller, changedSelectedModel: model)
             for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
                 c.updateStatus()
             }
@@ -289,13 +307,14 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                     value += 1
                 }
             }
-            if controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 == value + 1 {
+            if controller.imagePickerDataSource?.imagePickerMaxSelectedCount() ?? 9 == value + 1 {
                 debugPrint("达到最大值")
-            } else if (controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 <= value) {
+            } else if (controller.imagePickerDataSource?.imagePickerMaxSelectedCount() ?? 9 <= value) {
                 return
             }
             model.isSelected = true
             model.selectedCount = value + 1
+            controller.imagePickerDelegate?.imagePicker(controller, changedSelectedModel: model)
             for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
                 c.updateStatus()
             }
