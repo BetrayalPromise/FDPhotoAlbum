@@ -221,10 +221,12 @@ extension FDAssetController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NSStringFromClass(FDAssetCell.self), for: indexPath) as? FDAssetCell
-        cell?.delegate = self
-        cell?.configure(model: models?[indexPath.row])
-        return cell ?? FDAssetCell()
+        return collectionView.dequeueReusableCell(withReuseIdentifier: NSStringFromClass(FDAssetCell.self), for: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        (cell as? FDAssetCell)?.delegate = self
+        (cell as? FDAssetCell)?.configure(model: models?[indexPath.row])
     }
 }
 
@@ -247,6 +249,21 @@ extension FDAssetController: UICollectionViewDelegateFlowLayout {
 }
 
 extension FDAssetController: FDAssetCellSelectProtocal {
+    func selectReachMax() -> Bool {
+        guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return false }
+        var value = 0
+        for m in models ?? [] {
+            if m.isSelected {
+                value += 1
+            }
+        }
+        if controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 <= value {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func select(by cell: FDAssetCell, with model: FDAssetModel?) {
         guard let `model` = model else { return }
         guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
@@ -272,8 +289,9 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                     value += 1
                 }
             }
-            if controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 <= value {
-                debugPrint("选中超过最大值")
+            if controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 == value + 1 {
+                debugPrint("达到最大值")
+            } else if (controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 <= value) {
                 return
             }
             model.isSelected = true

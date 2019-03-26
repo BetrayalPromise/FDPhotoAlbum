@@ -5,6 +5,7 @@ import Photos
 
 protocol FDAssetCellSelectProtocal: class {
     func select(by cell: FDAssetCell, with model: FDAssetModel?)
+    func selectReachMax() -> Bool
 }
 
 class FDAssetCell: UICollectionViewCell {
@@ -67,6 +68,14 @@ class FDAssetCell: UICollectionViewCell {
         videoTimeLabel.font = UIFont.systemFont(ofSize: 12)
         videoTimeLabel.textColor = UIColor.white
         
+        let coverView: UIView = UIView(frame: .zero)
+        self.contentView.addSubview(coverView)
+        self.coverView = coverView
+        coverView.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+        coverView.translatesAutoresizingMaskIntoConstraints = false
+        coverView.isUserInteractionEnabled = false
+        coverView.isHidden = true
+        
         (showImageView.top == self.contentView.top).isActive = true
         (showImageView.left == self.contentView.left).isActive = true
         (showImageView.bottom == self.contentView.bottom).isActive = true
@@ -87,6 +96,11 @@ class FDAssetCell: UICollectionViewCell {
         
         (videoTimeLabel.centerY == videoImageView.centerY).isActive = true
         (videoTimeLabel.left == videoImageView.right + 9).isActive = true
+        
+        (coverView.top == self.contentView.top).isActive = true
+        (coverView.left == self.contentView.left).isActive = true
+        (coverView.bottom == self.contentView.bottom).isActive = true
+        (coverView.right == self.contentView.right).isActive = true
     }
     
     func configure(model: FDAssetModel?) {
@@ -108,6 +122,15 @@ class FDAssetCell: UICollectionViewCell {
             self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
             self.countLabel?.text = nil
         }
+        if model?.isSelected ?? false {
+            self.coverView?.isHidden = true
+        } else {
+            if self.delegate?.selectReachMax() ?? false {
+                self.coverView?.isHidden = false
+            } else {
+                self.coverView?.isHidden = true
+            }
+        }
         let option: PHImageRequestOptions = PHImageRequestOptions()
         option.isSynchronous = true
         PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
@@ -126,6 +149,15 @@ class FDAssetCell: UICollectionViewCell {
     }
     
     func updateStatus() {
+        if model?.isSelected ?? false {
+            self.coverView?.isHidden = true
+        } else {
+            if self.delegate?.selectReachMax() ?? false {
+                self.coverView?.isHidden = false
+            } else {
+                self.coverView?.isHidden = true
+            }
+        }
         if self.model?.isSelected ?? false {
             self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_selected"), for: .normal)
             self.countLabel?.text = "\(self.model?.selectedCount ?? 0)"
