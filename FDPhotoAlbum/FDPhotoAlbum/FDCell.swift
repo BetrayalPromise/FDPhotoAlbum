@@ -16,7 +16,7 @@ class FDAssetCell: UICollectionViewCell {
     private var countLabel: UILabel?
     /// 对应的model
     weak var model: FDAssetModel?
-    var delegate: FDAssetCellSelectProtocal?
+    weak var delegate: FDAssetCellSelectProtocal?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -88,5 +88,9 @@ class FDAssetCell: UICollectionViewCell {
             self.selectButton?.backgroundColor = .red
             self.countLabel?.text = nil
         }
+    }
+    
+    deinit {
+        debugPrint(self)
     }
 }

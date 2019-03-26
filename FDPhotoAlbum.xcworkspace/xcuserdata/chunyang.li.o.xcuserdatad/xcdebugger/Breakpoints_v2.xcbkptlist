@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FDPhotoAlbum/FDPhotoAlbum/FDController.swift"
-            timestampString = "575191052.603295"
+            timestampString = "575258847.2562391"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "select(by:with:)"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "deinit"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,7 +26,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FDPhotoAlbum/FDPhotoAlbum/FDImagePickerController.swift"
-            timestampString = "575191052.60365"
+            timestampString = "575258847.2568229"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "imagePickerStartRecord(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FDPhotoAlbum/FDPhotoAlbum/FDImagePickerController.swift"
+            timestampString = "575258847.256882"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "20"
@@ -41,13 +57,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FDPhotoAlbum/FDPhotoAlbum/FDCell.swift"
-            timestampString = "575193789.207813"
+            filePath = "FDPhotoAlbum/FDPhotoAlbum/FDController.swift"
+            timestampString = "575258847.256929"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "configure(model:)"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "deinit"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -19,7 +19,6 @@
 		F7483CDF2248802600E8B2BA /* FDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CDE2248802600E8B2BA /* FDCell.swift */; };
 		F7483CE122489C5600E8B2BA /* FDAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CE022489C5600E8B2BA /* FDAlbum.swift */; };
 		F78B9A432240945100076FB0 /* ButtonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78B9A422240945100076FB0 /* ButtonUtils.swift */; };
-		F7C11D532248B09300F6107E /* FDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C11D522248B09300F6107E /* FDView.swift */; };
 		F99E0B5B1A27D729F5111167E456E73D /* FDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE61A98EE50146FB97063B856BA414 /* FDController.swift */; };
 		FA771B98631F501E6093A94E6B64F20A /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D7FCE9810EB6D62035ED0099E7B1CE /* DataSource.swift */; };
 /* End PBXBuildFile section */
@@ -43,7 +42,6 @@
 		F7483CDE2248802600E8B2BA /* FDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDCell.swift; sourceTree = "<group>"; };
 		F7483CE022489C5600E8B2BA /* FDAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDAlbum.swift; sourceTree = "<group>"; };
 		F78B9A422240945100076FB0 /* ButtonUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonUtils.swift; sourceTree = "<group>"; };
-		F7C11D522248B09300F6107E /* FDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +118,6 @@
 				F7483CD62244A8EC00E8B2BA /* FDAssetModel.swift */,
 				F7483CDE2248802600E8B2BA /* FDCell.swift */,
 				F7483CE022489C5600E8B2BA /* FDAlbum.swift */,
-				F7C11D522248B09300F6107E /* FDView.swift */,
 			);
 			path = FDPhotoAlbum;
 			sourceTree = "<group>";
@@ -240,7 +237,6 @@
 				5F2247ED475D9A97ED21B2BDD223FB1B /* AppDelegate.swift in Sources */,
 				F7483CE122489C5600E8B2BA /* FDAlbum.swift in Sources */,
 				F78B9A432240945100076FB0 /* ButtonUtils.swift in Sources */,
-				F7C11D532248B09300F6107E /* FDView.swift in Sources */,
 				F7483CD72244A8EC00E8B2BA /* FDAssetModel.swift in Sources */,
 				FA771B98631F501E6093A94E6B64F20A /* DataSource.swift in Sources */,
 				F7483CDD22487FA400E8B2BA /* FDLeftFlowLayout.swift in Sources */,

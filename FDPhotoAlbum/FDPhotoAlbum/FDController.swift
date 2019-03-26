@@ -8,8 +8,15 @@ class FDCollectionController: UIViewController {
     private var list: [FDAlbumModel]?
     private var table: UITableView?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "A", style: UIBarButtonItem.Style.done, target: self, action: #selector(handle(barButtonItem:)))
        
         let currentStatus = PHPhotoLibrary.authorizationStatus()
         switch currentStatus {
@@ -39,12 +46,22 @@ class FDCollectionController: UIViewController {
         }
     }
     
+    @objc
+    func handle(barButtonItem: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     /// 获取数据
     private func getDatas() {
         DataSource.getAlbums { (models) in
-            print(models)
             self.list = models
-            self.table?.reloadData()
+            if pthread_main_np() != 0 {
+                self.table?.reloadData()
+            } else {
+                DispatchQueue.main.async {
+                    self.table?.reloadData()
+                }
+            }
         }
     }
     
@@ -115,6 +132,10 @@ class FDCollectionController: UIViewController {
             }
         }
     }
+    
+    deinit {
+        debugPrint(self)
+    }
 }
 
 extension FDCollectionController: DataSourceFilterProtocal {
@@ -174,6 +195,10 @@ class FDAssetController: UIViewController {
             (collection.bottom == self.bottomLayoutGuide.top).isActive = true
             (collection.right == self.view.right).isActive = true
         }
+    }
+    
+    deinit {
+        debugPrint(self)
     }
 }
 
@@ -242,7 +267,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 }
             }
             if controller.imagePickerDataSource?.imagePickerMaxSelectedCount(controller) ?? 9 <= value {
-                print("选中超过最大值")
+                debugPrint("选中超过最大值")
                 return
             }
             model.isSelected = true
