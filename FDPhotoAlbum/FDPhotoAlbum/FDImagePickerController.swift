@@ -4,10 +4,12 @@ import Photos
 public protocol FDImagePickerControllerDelegate: class {
     /// 点击选中变化回调
     func imagePicker(_ imagePicker: FDImagePickerController, changedSelectedModel model: FDAssetModel?)
-    /// 最大选择数量
+    /// 最大选择数量 默认最大值为 9
     func imagePickerMaxSelectedCount() -> Int
     /// 是否过滤控制的集合
     func imagePickerFilerEmptyCollection() -> Bool
+    /// 数据源过滤默认都支持 实现协议的话 数据源会留下对应 [PHAssetMediaType]包涵的数据类型
+    func imagePickerSupportType() -> [PHAssetMediaType]
 }
 
 extension FDImagePickerControllerDelegate {
@@ -19,6 +21,10 @@ extension FDImagePickerControllerDelegate {
     
     func imagePickerFilerEmptyCollection() -> Bool {
         return true
+    }
+    
+    func imagePickerSupportType() -> [PHAssetMediaType] {
+        return [.video, .image, .audio]
     }
 }
 

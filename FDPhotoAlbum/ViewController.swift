@@ -1,4 +1,5 @@
 import UIKit
+import Photos
 
 class ViewController: UIViewController {
     
@@ -28,8 +29,8 @@ extension ViewController: FDImagePickerControllerDelegate {
         return true
     }
     
-    func imagePicker(_ imagePicker: FDImagePickerController, changedSelectedModel model: FDAssetModel?) {
-        
+    func imagePickerSupportType() -> [PHAssetMediaType] {
+        return [.image]
     }
 }
 

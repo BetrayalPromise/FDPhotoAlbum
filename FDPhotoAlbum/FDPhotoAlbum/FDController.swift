@@ -61,7 +61,15 @@ class FDCollectionController: UIViewController {
             } else {
                 self.list = models
             }
-            
+            let types = controller.imagePickerDelegate?.imagePickerSupportType()
+            self.list?.forEach({ (model) in
+                model.models = model.models?.filter({ (m) -> Bool in
+                    if types?.contains(m.asset?.mediaType ?? .unknown) ?? true {
+                        return true
+                    }
+                    return false
+                })
+            })
             if pthread_main_np() != 0 {
                 self.collection?.reloadData()
             } else {
