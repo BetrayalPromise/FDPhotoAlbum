@@ -132,10 +132,6 @@ class FDCollectionController: UIViewController {
             }
         }
     }
-    
-    deinit {
-        debugPrint(self)
-    }
 }
 
 extension FDCollectionController: DataSourceFilterProtocal {
@@ -167,6 +163,8 @@ extension FDCollectionController: UITableViewDataSource {
 class FDAssetController: UIViewController {
     var models: [FDAssetModel]?
     var collection: UICollectionView?
+    weak var ownNavigationController: UINavigationController?
+    
     convenience init(models: [FDAssetModel]?) {
         self.init()
         self.models = models
@@ -174,6 +172,8 @@ class FDAssetController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.ownNavigationController = self.navigationController
         self.view.backgroundColor = .white
         let collection: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: FDLeftFlowLayout())
         self.view.addSubview(collection)
@@ -198,7 +198,13 @@ class FDAssetController: UIViewController {
     }
     
     deinit {
-        debugPrint(self)
+        guard let controller: FDImagePickerController = self.ownNavigationController as? FDImagePickerController else { return }
+        if controller.imagePickerDataSource?.imagePickerStartRecord(controller) ?? false {
+            self.models?.forEach({ (m) in
+                m.isSelected = false
+                m.selectedCount = 0
+            })
+        }
     }
 }
 

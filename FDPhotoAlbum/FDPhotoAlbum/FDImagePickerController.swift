@@ -11,7 +11,7 @@ public protocol FDImagePickerControllerDataSource: class {
     func imagePickerMaxSelectedCount(_ imagePicker: FDImagePickerController) -> Int
     /// 支持的格式 例如 mp4
     func imagePickerSupportType() -> [String]
-    /// 是否开启记录功能 默认开启
+    /// 是否开启记录功能 默认关闭
     func imagePickerStartRecord(_ imagePicker: FDImagePickerController) -> Bool
 }
 
@@ -21,7 +21,7 @@ extension FDImagePickerControllerDelegate {
     }
     
     func imagePickerStartRecord(_ imagePicker: FDImagePickerController) -> Bool {
-        return true
+        return false
     }
 }
 

@@ -14,6 +14,13 @@ class FDAssetCell: UICollectionViewCell {
     private var selectButton: UIButton?
     /// 数量标签
     private var countLabel: UILabel?
+    /// 视频图标
+    private var videoImageView: UIImageView?
+    /// 视频时长标签
+    private var videoTimeLabel: UILabel?
+    
+    /// 蒙层视图
+    private var coverView: UIView?
     /// 对应的model
     weak var model: FDAssetModel?
     weak var delegate: FDAssetCellSelectProtocal?
@@ -36,7 +43,7 @@ class FDAssetCell: UICollectionViewCell {
         self.selectButton = selectButton
         selectButton.translatesAutoresizingMaskIntoConstraints = false
         selectButton.addTarget(self, action: #selector(handle(button:)), for: UIControl.Event.touchUpInside)
-        selectButton.backgroundColor = .red
+        selectButton.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
         selectButton.layer.cornerRadius = 10
         selectButton.layer.masksToBounds = true
         
@@ -45,6 +52,20 @@ class FDAssetCell: UICollectionViewCell {
         self.countLabel = countLabel
         countLabel.translatesAutoresizingMaskIntoConstraints = false
         countLabel.font = UIFont.systemFont(ofSize: 12)
+        countLabel.textColor = .white
+        
+        let videoImageView: UIImageView = UIImageView(frame: .zero)
+        self.contentView.addSubview(videoImageView)
+        self.videoImageView = videoImageView
+        videoImageView.translatesAutoresizingMaskIntoConstraints = false
+        videoImageView.image = UIImage(named: "Ablum.bundle/icon_video")
+        
+        let videoTimeLabel: UILabel = UILabel(frame: .zero)
+        self.contentView.addSubview(videoTimeLabel)
+        self.videoTimeLabel = videoTimeLabel
+        videoTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        videoTimeLabel.font = UIFont.systemFont(ofSize: 12)
+        videoTimeLabel.textColor = UIColor.white
         
         (showImageView.top == self.contentView.top).isActive = true
         (showImageView.left == self.contentView.left).isActive = true
@@ -58,11 +79,35 @@ class FDAssetCell: UICollectionViewCell {
         
         (countLabel.centerX == selectButton.centerX).isActive = true
         (countLabel.centerY == selectButton.centerY).isActive = true
+        
+        (videoImageView.left == self.contentView.left + 9).isActive = true
+        (videoImageView.bottom == self.contentView.bottom - 8).isActive = true
+        (videoImageView.width == 12).isActive = true
+        (videoImageView.height == 10).isActive = true
+        
+        (videoTimeLabel.centerY == videoImageView.centerY).isActive = true
+        (videoTimeLabel.left == videoImageView.right + 9).isActive = true
     }
     
     func configure(model: FDAssetModel?) {
         guard let asset = model?.asset else { return }
         self.model = model
+        self.videoTimeLabel?.text = model?.duration
+        
+        if model?.asset?.mediaType != .video {
+            self.videoImageView?.isHidden = true
+            self.videoTimeLabel?.isHidden = true
+        } else {
+            self.videoImageView?.isHidden = false
+            self.videoTimeLabel?.isHidden = false
+        }
+        if self.model?.isSelected ?? false {
+            self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_selected"), for: .normal)
+            self.countLabel?.text = "\(self.model?.selectedCount ?? 0)"
+        } else {
+            self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
+            self.countLabel?.text = nil
+        }
         let option: PHImageRequestOptions = PHImageRequestOptions()
         option.isSynchronous = true
         PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
@@ -82,15 +127,11 @@ class FDAssetCell: UICollectionViewCell {
     
     func updateStatus() {
         if self.model?.isSelected ?? false {
-            self.selectButton?.backgroundColor = .yellow
+            self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_selected"), for: .normal)
             self.countLabel?.text = "\(self.model?.selectedCount ?? 0)"
         } else {
-            self.selectButton?.backgroundColor = .red
+            self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
             self.countLabel?.text = nil
         }
-    }
-    
-    deinit {
-        debugPrint(self)
     }
 }
