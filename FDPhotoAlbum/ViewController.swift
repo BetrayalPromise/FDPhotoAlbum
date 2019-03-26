@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         let controller = FDImagePickerController(multiple: true)
         controller.imagePickerDataSource = self
         controller.imagePickerDelegate = self
-        self.present(FDImagePickerController(multiple: true), animated: true, completion: nil)
+        self.present(controller, animated: true, completion: nil)
     }
 }
 

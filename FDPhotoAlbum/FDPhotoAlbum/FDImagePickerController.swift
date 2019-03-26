@@ -36,10 +36,23 @@ extension FDImagePickerControllerDelegate {
 }
 
 open class FDImagePickerController: UINavigationController {
-    public weak var imagePickerDelegate: FDImagePickerControllerDelegate?
-    public weak var imagePickerDataSource: FDImagePickerControllerDataSource?
+    public weak var imagePickerDelegate: FDImagePickerControllerDelegate? {
+        set {
+            FDAlbum.default.delegate = newValue
+        } get {
+            return FDAlbum.default.delegate
+        }
+    }
+    public weak var imagePickerDataSource: FDImagePickerControllerDataSource? {
+        set {
+            FDAlbum.default.dataSource = newValue
+        } get {
+            return FDAlbum.default.dataSource
+        }
+    }
     
-    private var multiple: Bool?
+    var multiple: Bool?
+    
     /// 是否开启混选模式
     convenience init(multiple: Bool) {
         self.init(rootViewController: FDCollectionController())
@@ -51,9 +64,9 @@ open class FDImagePickerController: UINavigationController {
         self.view.backgroundColor = .white
     }
 
-    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        self.dismiss(animated: true, completion: nil)
+    deinit {
+        FDAlbum.default.delegate = nil
+        FDAlbum.default.dataSource = nil
     }
 
 }

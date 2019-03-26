@@ -1,10 +1,3 @@
-//
-//  FDAssetModel.swift
-//  FDPhotoAlbum
-//
-//  Created by Chunyang Li 李春阳 on 2019/3/22.
-//
-
 import Foundation
 import Photos
 

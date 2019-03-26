@@ -6,10 +6,11 @@ import SweetAutoLayout
 class FDCollectionController: UIViewController {
     /// 列表数据源
     private var list: [FDAlbumModel]?
-    private var table: UITableView?
+    private var collection: UICollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "相册"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Ablum.bundle/icon_back"), style: .done, target: self, action: #selector(handle(barButtonItem:)))
        
         let currentStatus = PHPhotoLibrary.authorizationStatus()
@@ -62,10 +63,10 @@ class FDCollectionController: UIViewController {
             }
             
             if pthread_main_np() != 0 {
-                self.table?.reloadData()
+                self.collection?.reloadData()
             } else {
                 DispatchQueue.main.async {
-                    self.table?.reloadData()
+                    self.collection?.reloadData()
                 }
             }
         }
@@ -111,23 +112,25 @@ class FDCollectionController: UIViewController {
     /// 获取相册数据显示
     private func buildUserInterface() {
         let build: () -> Void = {
-            let table: UITableView = UITableView(frame: .zero, style: UITableView.Style.plain)
-            self.view.addSubview(table)
-            self.table = table
-            table.delegate = self
-            table.dataSource = self
-            table.translatesAutoresizingMaskIntoConstraints = false
-            table.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
+            let collection: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: FDLeftFlowLayout())
+            self.view.addSubview(collection)
+            self.collection = collection
+            collection.delegate = self
+            collection.dataSource = self
+            collection.translatesAutoresizingMaskIntoConstraints = false
+            collection.register(FDCollectionCell.self, forCellWithReuseIdentifier: NSStringFromClass(FDCollectionCell.self))
+            collection.alwaysBounceVertical = true
+            collection.backgroundColor = .white
             if #available(iOS 11.0, *) {
-                (table.top == self.view.safeAreaLayoutGuide.top).isActive = true
-                (table.left == self.view.safeAreaLayoutGuide.left).isActive = true
-                (table.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
-                (table.right == self.view.safeAreaLayoutGuide.right).isActive = true
+                (collection.top == self.view.safeAreaLayoutGuide.top).isActive = true
+                (collection.left == self.view.safeAreaLayoutGuide.left).isActive = true
+                (collection.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
+                (collection.right == self.view.safeAreaLayoutGuide.right).isActive = true
             } else {
-                (table.top == self.topLayoutGuide.bottom).isActive = true
-                (table.left == self.view.left).isActive = true
-                (table.bottom == self.bottomLayoutGuide.top).isActive = true
-                (table.right == self.view.right).isActive = true
+                (collection.top == self.topLayoutGuide.bottom).isActive = true
+                (collection.left == self.view.left).isActive = true
+                (collection.bottom == self.bottomLayoutGuide.top).isActive = true
+                (collection.right == self.view.right).isActive = true
             }
         }
         if pthread_main_np() != 0 {
@@ -140,31 +143,50 @@ class FDCollectionController: UIViewController {
     }
 }
 
-/// PHAsset展示
-extension FDCollectionController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+extension FDCollectionController: UICollectionViewDelegateFlowLayout {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.frame.width - 56) / 2.0, height: (collectionView.frame.width - 55) / 2.0 + 40)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5.0
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 25
+    }
+}
+
+extension FDCollectionController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let controller = FDAssetController(models: self.list?[indexPath.row].models)
         controller.selectedModels = { models in
-
+            
         }
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-extension FDCollectionController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension FDCollectionController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.list?.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self)) ?? UITableViewCell()
-        cell.textLabel?.text = self.list?[indexPath.row].name ?? ""
-        cell.detailTextLabel?.text = "\(self.list?[indexPath.row].models?.count ?? 0)"
-        return cell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return collectionView.dequeueReusableCell(withReuseIdentifier: NSStringFromClass(FDCollectionCell.self), for: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        (cell as? FDCollectionCell)?.model = self.list?[indexPath.row]
     }
 }
 
-///
+/// PHAsset
 class FDAssetController: UIViewController {
     var models: [FDAssetModel]?
     var collection: UICollectionView?

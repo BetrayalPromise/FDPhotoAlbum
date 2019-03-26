@@ -3,6 +3,80 @@ import UIKit
 import SweetAutoLayout
 import Photos
 
+class FDCollectionCell: UICollectionViewCell {
+    
+    private var showImageView: UIImageView?
+    private var nameLabel: UILabel?
+    private var totalLabel: UILabel?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.contentView.backgroundColor = .white
+        self.createUserInterface()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func createUserInterface() {
+        let showImageView: UIImageView = UIImageView(frame: .zero)
+        self.contentView.addSubview(showImageView)
+        self.showImageView = showImageView
+        showImageView.translatesAutoresizingMaskIntoConstraints = false
+        showImageView.contentMode = .center
+        showImageView.clipsToBounds = true
+        
+        let nameLabel: UILabel = UILabel(frame: .zero)
+        self.contentView.addSubview(nameLabel)
+        self.nameLabel = nameLabel
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.textAlignment = .left
+        nameLabel.lineBreakMode = .byTruncatingTail
+        nameLabel.font = UIFont.systemFont(ofSize: 16)
+//        nameLabel.textColor = UIColor(fd_hexString: "#040B29")
+        
+        let totalLabel: UILabel = UILabel(frame: .zero)
+        self.contentView.addSubview(totalLabel)
+        self.totalLabel = totalLabel
+        totalLabel.translatesAutoresizingMaskIntoConstraints = false
+        totalLabel.textAlignment = .left
+        totalLabel.lineBreakMode = .byTruncatingTail
+        totalLabel.font = UIFont.systemFont(ofSize: 14)
+//        totalLabel.textColor = UIColor(fd_hexString: "#9B9DA9")
+        
+        (showImageView.top == self.contentView.top).isActive = true
+        (showImageView.left == self.contentView.left).isActive = true
+        (showImageView.width == self.contentView.width).isActive = true
+        (showImageView.height == showImageView.width).isActive = true
+        
+        (nameLabel.top == showImageView.bottom).isActive = true
+        (nameLabel.left == showImageView.left).isActive = true
+        (nameLabel.right <= showImageView.right).isActive = true
+        
+        (totalLabel.bottom == self.contentView.bottom).isActive = true
+        (totalLabel.left == showImageView.left).isActive = true
+        (totalLabel.right <= showImageView.right).isActive = true
+    }
+    
+    var model: FDAlbumModel? {
+        didSet {
+            self.nameLabel?.text = model?.name
+            self.totalLabel?.text = "\(model?.models?.count ?? 0)"
+            guard let asset = model?.models?.last?.asset else {
+                return
+            }
+            let option = PHImageRequestOptions()
+            option.isSynchronous = true
+            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
+                guard let `self` = self else { return }
+                self.showImageView?.image = image
+            }
+        }
+    }
+    
+}
+
 protocol FDAssetCellSelectProtocal: class {
     func select(by cell: FDAssetCell, with model: FDAssetModel?)
     func selectReachMax() -> Bool
