@@ -14,19 +14,20 @@ class ViewController: UIViewController {
     @objc
     func handle(button: UIButton) {
         let controller = FDImagePickerController(multiple: true)
-        controller.imagePickerDataSource = self
         controller.imagePickerDelegate = self
         self.present(controller, animated: true, completion: nil)
     }
 }
 
-extension ViewController: FDImagePickerControllerDataSource {
+extension ViewController: FDImagePickerControllerDelegate {
+    func imagePickerAllowMultiple() -> Bool {
+        return true
+    }
+    
     func imagePickerFilerEmptyCollection() -> Bool {
         return true
     }
-}
-
-extension ViewController: FDImagePickerControllerDelegate {
+    
     func imagePicker(_ imagePicker: FDImagePickerController, changedSelectedModel model: FDAssetModel?) {
         
     }

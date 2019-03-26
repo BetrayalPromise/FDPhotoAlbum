@@ -50,7 +50,7 @@ class FDCollectionController: UIViewController {
     private func getDatas() {
         DataSource.getAlbums { (models) in
             guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
-            if controller.imagePickerDataSource?.imagePickerFilerEmptyCollection() ?? true {
+            if controller.imagePickerDelegate?.imagePickerFilerEmptyCollection() ?? true {
                 self.list = models.filter({ (m) -> Bool in
                     if m.models?.count ?? 0 > 0 {
                         return true
@@ -234,13 +234,10 @@ class FDAssetController: UIViewController {
     }
     
     deinit {
-        guard let controller: FDImagePickerController = self.ownNavigationController as? FDImagePickerController else { return }
-        if controller.imagePickerDataSource?.imagePickerStartRecord() ?? false {
-            self.models?.forEach({ (m) in
-                m.isSelected = false
-                m.selectedCount = 0
-            })
-        }
+        self.models?.forEach({ (m) in
+            m.isSelected = false
+            m.selectedCount = 0
+        })
     }
 }
 
@@ -296,7 +293,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 value += 1
             }
         }
-        if controller.imagePickerDataSource?.imagePickerMaxSelectedCount() ?? 9 <= value {
+        if controller.imagePickerDelegate?.imagePickerMaxSelectedCount() ?? 9 <= value {
             return true
         } else {
             return false
@@ -329,9 +326,9 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                     value += 1
                 }
             }
-            if controller.imagePickerDataSource?.imagePickerMaxSelectedCount() ?? 9 == value + 1 {
+            if controller.imagePickerDelegate?.imagePickerMaxSelectedCount() ?? 9 == value + 1 {
                 debugPrint("达到最大值")
-            } else if (controller.imagePickerDataSource?.imagePickerMaxSelectedCount() ?? 9 <= value) {
+            } else if (controller.imagePickerDelegate?.imagePickerMaxSelectedCount() ?? 9 <= value) {
                 return
             }
             model.isSelected = true
