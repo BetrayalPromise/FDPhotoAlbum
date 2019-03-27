@@ -214,7 +214,7 @@ class FDAssetController: UIViewController {
         
         self.ownNavigationController = self.navigationController
         self.view.backgroundColor = .white
-        let collection: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: FDLeftFlowLayout())
+        let collection: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         self.view.addSubview(collection)
         self.collection = collection
         collection.backgroundColor = .white
