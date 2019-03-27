@@ -328,7 +328,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 c.updateStatus()
             }
         } else {
-            let types:  [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportSelectAssetMediaTypes() ?? [.audio, .image, .video]
+            let types: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportSelectAssetMediaTypes() ?? [.audio, .image, .video, .video]
             if !types.contains(model.asset?.mediaType ?? .unknown) {
                 print("不支持的选择类型")
                 return
@@ -344,7 +344,35 @@ extension FDAssetController: FDAssetCellSelectProtocal {
             if controller.imagePickerDelegate?.imagePickerMaxSelectedCount() ?? 9 == value + 1 {
                 debugPrint("达到最大值")
             } else if (controller.imagePickerDelegate?.imagePickerMaxSelectedCount() ?? 9 <= value) {
+                debugPrint("超过最大值")
                 return
+            } else {
+                if model.asset?.mediaType == .image {
+                    var imageValue = 0
+                    for m in models ?? [] {
+                        if m.isSelected && m.asset?.mediaType == .image {
+                            imageValue += 1
+                        }
+                    }
+                    let imageMax: Int = controller.imagePickerDelegate?.imagePickerSelectMaxImageCount() ?? 9
+                    if imageValue + 1 > imageMax {
+                        print("image 超过上限")
+                        return
+                    }
+                }
+                if model.asset?.mediaType == .video {
+                    var videoValue = 0
+                    for m in models ?? [] {
+                        if m.isSelected && m.asset?.mediaType == .video {
+                            videoValue += 1
+                        }
+                    }
+                    let videoMax: Int = controller.imagePickerDelegate?.imagePickerSelectMaxVideoCount() ?? 9
+                    if videoValue + 1 > videoMax {
+                        print("video 超过上限")
+                        return
+                    }
+                }
             }
             model.isSelected = true
             model.selectedCount = value + 1
