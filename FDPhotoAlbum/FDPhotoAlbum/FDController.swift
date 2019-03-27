@@ -61,10 +61,11 @@ class FDCollectionController: UIViewController {
             } else {
                 self.list = models
             }
-            let types: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
+            let supportTypes: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
+            let unsupportTypes: [String] = controller.imagePickerDelegate?.imagePickerUnSupportTypes() ?? []
             self.list?.forEach({ (model) in
                 model.models = model.models?.filter({ (m) -> Bool in
-                    if types.contains(m.asset?.mediaType ?? .unknown) {
+                    if supportTypes.contains(m.asset?.mediaType ?? .unknown) && !unsupportTypes.contains(m.suffix ?? "") {
                         return true
                     }
                     return false
@@ -327,7 +328,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 c.updateStatus()
             }
         } else {
-            let types:  [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportSelectTypes() ?? [.audio, .image, .video]
+            let types:  [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportSelectAssetMediaType() ?? [.audio, .image, .video]
             if !types.contains(model.asset?.mediaType ?? .unknown) {
                 print("不支持的选择类型")
                 return
@@ -358,6 +359,6 @@ extension FDAssetController: FDAssetCellSelectProtocal {
         guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else {
             return [.image, .video, .audio, .unknown]
         }
-        return controller.imagePickerDelegate?.imagePickerSupportSelectTypes() ?? [.image, .video, .audio, .unknown]
+        return controller.imagePickerDelegate?.imagePickerSupportSelectAssetMediaType() ?? [.image, .video, .audio, .unknown]
     }
 }

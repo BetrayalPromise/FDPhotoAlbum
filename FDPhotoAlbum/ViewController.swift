@@ -21,12 +21,16 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: FDImagePickerControllerDelegate {
-    func imagePickerSupportSelectTypes() -> [PHAssetMediaType] {
+    func imagePickerSupportSelectAssetMediaType() -> [PHAssetMediaType] {
         return [.image]
     }
     
     func imagePickerFilerEmptyCollection() -> Bool {
         return true
+    }
+    
+    func imagePickerUnSupportTypes() -> [String] {
+        return ["mov"]
     }
 }
 
