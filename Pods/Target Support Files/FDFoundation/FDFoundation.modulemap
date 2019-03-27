@@ -1,0 +1,6 @@
+framework module FDFoundation {
+  umbrella header "FDFoundation-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import SweetAutoLayout
 import Photos
+import FDFoundation
 
 class FDCollectionCell: UICollectionViewCell {
     
@@ -20,11 +21,12 @@ class FDCollectionCell: UICollectionViewCell {
     }
     
     func createUserInterface() {
+        self.clipsToBounds = true
         let showImageView: UIImageView = UIImageView(frame: .zero)
         self.contentView.addSubview(showImageView)
         self.showImageView = showImageView
         showImageView.translatesAutoresizingMaskIntoConstraints = false
-        showImageView.contentMode = .center
+        showImageView.contentMode = .scaleAspectFill
         showImageView.clipsToBounds = true
         
         let nameLabel: UILabel = UILabel(frame: .zero)
@@ -34,7 +36,7 @@ class FDCollectionCell: UICollectionViewCell {
         nameLabel.textAlignment = .left
         nameLabel.lineBreakMode = .byTruncatingTail
         nameLabel.font = UIFont.systemFont(ofSize: 16)
-//        nameLabel.textColor = UIColor(fd_hexString: "#040B29")
+        nameLabel.textColor = UIColor(fd_hexString: "#040B29")
         
         let totalLabel: UILabel = UILabel(frame: .zero)
         self.contentView.addSubview(totalLabel)
@@ -43,7 +45,7 @@ class FDCollectionCell: UICollectionViewCell {
         totalLabel.textAlignment = .left
         totalLabel.lineBreakMode = .byTruncatingTail
         totalLabel.font = UIFont.systemFont(ofSize: 14)
-//        totalLabel.textColor = UIColor(fd_hexString: "#9B9DA9")
+        totalLabel.textColor = UIColor(fd_hexString: "#9B9DA9")
         
         (showImageView.top == self.contentView.top).isActive = true
         (showImageView.left == self.contentView.left).isActive = true
@@ -108,11 +110,12 @@ class FDAssetCell: UICollectionViewCell {
     }
     
     func createUserInterface() {
+        self.clipsToBounds = true
         let showImageView = UIImageView(frame: .zero)
         self.contentView.addSubview(showImageView)
         self.showImageView = showImageView
         showImageView.translatesAutoresizingMaskIntoConstraints = false
-        showImageView.contentMode = .scaleToFill
+        showImageView.contentMode = .scaleAspectFill
         
         let selectButton: UIButton = UIButton.init(frame: .zero)
         self.contentView.addSubview(selectButton)

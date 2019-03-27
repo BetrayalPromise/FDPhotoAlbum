@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1010"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EBA56065E263824DE10AE284D6A0B3F5"
+               BlueprintIdentifier = "3ED5986DFFC708BBC8C6AFFD1121B3CC"
                BuildableName = "Pods_FDPhotoAlbum.framework"
                BlueprintName = "Pods-FDPhotoAlbum"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EBA56065E263824DE10AE284D6A0B3F5"
+            BlueprintIdentifier = "3ED5986DFFC708BBC8C6AFFD1121B3CC"
             BuildableName = "Pods_FDPhotoAlbum.framework"
             BlueprintName = "Pods-FDPhotoAlbum"
             ReferencedContainer = "container:Pods.xcodeproj">

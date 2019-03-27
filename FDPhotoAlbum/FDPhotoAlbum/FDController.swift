@@ -41,6 +41,11 @@ class FDCollectionController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.collection?.reloadData()
+    }
+    
     @objc
     func handle(barButtonItem: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
@@ -174,6 +179,7 @@ extension FDCollectionController: UICollectionViewDelegateFlowLayout {
 extension FDCollectionController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let controller = FDAssetController(models: self.list?[indexPath.row].models)
+        controller.title = self.list?[indexPath.row].name
         controller.selectedModels = { models in
             
         }
@@ -211,6 +217,12 @@ class FDAssetController: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Ablum.bundle/icon_back"), style: .done, target: self, action: #selector(handle(barButtonItem:)))
+        self.navigationItem.rightBarButtonItem = {
+            let item: UIBarButtonItem = UIBarButtonItem(title: "取消", style: .plain, target: self, action: #selector(cancelButtonClick))
+            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(fd_hexString: "#363C54") ?? UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)], for: UIControl.State.normal)
+            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(fd_hexString: "#363C54") ?? UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)], for: UIControl.State.highlighted)
+            return item
+        }()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         self.ownNavigationController = self.navigationController
@@ -240,6 +252,11 @@ class FDAssetController: UIViewController {
     @objc
     func handle(barButtonItem: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc
+    func cancelButtonClick() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     deinit {

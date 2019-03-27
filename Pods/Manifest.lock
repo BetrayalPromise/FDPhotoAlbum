@@ -1,8 +1,24 @@
 PODS:
+  - FDFoundation (1.3.6):
+    - FDFoundation/Extension (= 1.3.6)
+    - FDFoundation/FileManager (= 1.3.6)
+    - FDFoundation/FileMD5Hash (= 1.3.6)
+    - FDFoundation/Util (= 1.3.6)
+    - FDFoundation/ZipArchive (= 1.3.6)
+  - FDFoundation/Extension (1.3.6)
+  - FDFoundation/FileManager (1.3.6)
+  - FDFoundation/FileMD5Hash (1.3.6)
+  - FDFoundation/Util (1.3.6)
+  - FDFoundation/ZipArchive (1.3.6)
   - SweetAutoLayout (0.1.0)
 
 DEPENDENCIES:
+  - FDFoundation
   - SweetAutoLayout (from `https://github.com/BetrayalPromise/SweetAutoLayout.git`)
+
+SPEC REPOS:
+  "git@git.nevint.com:DOMOBILE-FeiDian/DOMOBILE-FeiDian-FDSpec.git":
+    - FDFoundation
 
 EXTERNAL SOURCES:
   SweetAutoLayout:
@@ -14,8 +30,9 @@ CHECKOUT OPTIONS:
     :git: https://github.com/BetrayalPromise/SweetAutoLayout.git
 
 SPEC CHECKSUMS:
+  FDFoundation: 3624819a653e027a70fae2549d7eeb0071082940
   SweetAutoLayout: 964750e9717680450bd6054dc249485a2b361e01
 
-PODFILE CHECKSUM: 1b3e728e96d427a9d487c78f895b582a0a76d968
+PODFILE CHECKSUM: d75bcfd19f767ba812464b9cb09a4f5a97963ff5
 
 COCOAPODS: 1.6.1

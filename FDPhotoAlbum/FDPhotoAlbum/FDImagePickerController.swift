@@ -1,5 +1,6 @@
 import UIKit
 import Photos
+import FDFoundation
 
 public protocol FDImagePickerControllerDelegate: class {
     /// 点击选中变化回调
@@ -86,14 +87,23 @@ open class FDImagePickerController: UINavigationController {
         }
     }
     
-    /// 是否开启混选模式
-    convenience init(multiple: Bool) {
+    private var isAppearSelect: Bool = false
+    
+    
+    /// 是否出现选择
+    convenience init(isAppearSelect: Bool) {
         self.init(rootViewController: FDCollectionController())
+        self.isAppearSelect = isAppearSelect
     }
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        navigationBar.barStyle = .default
+        navigationBar.barTintColor = UIColor.white
+        navigationBar.tintColor = UIColor(fd_hexString: "#363C54") ?? UIColor.black
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(fd_hexString: "#363C54") ?? UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
     }
 
     deinit {

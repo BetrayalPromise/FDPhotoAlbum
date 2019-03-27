@@ -199,12 +199,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FDPhotoAlbum/Pods-FDPhotoAlbum-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FDFoundation/FDFoundation.framework",
 				"${BUILT_PRODUCTS_DIR}/SweetAutoLayout/SweetAutoLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FDFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SweetAutoLayout.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     
     @objc
     func handle(button: UIButton) {
-        let controller = FDImagePickerController.init(multiple: true)
+        let controller = FDImagePickerController(isAppearSelect: true)
         controller.imagePickerDelegate = self
         self.present(controller, animated: true, completion: nil)
     }
