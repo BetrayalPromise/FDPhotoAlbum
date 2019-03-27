@@ -24,8 +24,16 @@ public protocol FDImagePickerControllerDelegate: class {
     
     /// 支持多种类型选择 例如可以选择视频和图片 前提是 上面的这个协议要支持多种类型 否则 没有意思 即为 该协议的返回值是imagePickerSupportAssetMediaTypes()返回值的子集
     func imagePickerSupportSelectAssetMediaTypes() -> [PHAssetMediaType]
-    /// 同上不过依据的是文件的类型区分是否支持 如["png", "3gp", "mp4"] 同样是imagePickerUnSupportTypes()返回值取反后的子集才有意义
-    func imagePickerSupportSelectTypes() -> [String]
+    
+    /***
+        选中数量控制协议
+        如果imagePickerSupportAssetMediaTypes()返回值如果是[.image]的话则imagePickerSelectMaxVideoCount()无意义
+        如果imagePickerSupportAssetMediaTypes()返回值如果是[.video]的话则imagePickerSelectMaxImageCount()无意义
+     
+        二者总和 不得会超过 imagePickerMaxSelectedCount()的返回值 内部有控制无需担心
+     ***/
+    func imagePickerSelectMaxImageCount() -> Int
+    func imagePickerSelectMaxVideoCount() -> Int
 }
 
 extension FDImagePickerControllerDelegate {
@@ -51,9 +59,12 @@ extension FDImagePickerControllerDelegate {
         return [.video, .image, .audio, .unknown]
     }
     
-    /// 与安卓支持的一样
-    func imagePickerSupportSelectTypes() -> [String] {
-        return ["jpg", "jpeg", "png", "gif", "bmp", "webp", "mpeg", "mpg", "mp4", "m4v", "mov", "3gp", "3gpp", "mkv", "webm", "ts", "avi"]
+    func imagePickerSelectMaxImageCount() -> Int {
+        return 9
+    }
+    
+    func imagePickerSelectMaxVideoCount() -> Int {
+        return 9
     }
 }
 
