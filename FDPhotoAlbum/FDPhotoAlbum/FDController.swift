@@ -7,7 +7,13 @@ class FDCollectionController: UIViewController {
     /// 列表数据源
     private var list: [FDAlbumModel]?
     private var collection: UICollectionView?
+    var isAppearAsset: Bool?
     
+    convenience init(isAppearAsset: Bool) {
+        self.init()
+        self.isAppearAsset = isAppearAsset
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "相册"
@@ -205,6 +211,8 @@ extension FDCollectionController: UICollectionViewDataSource {
 class FDAssetController: UIViewController {
     var models: [FDAssetModel]?
     var collection: UICollectionView?
+    var previewButton: UIButton?
+    var confirmButton: UIButton?
     weak var ownNavigationController: UINavigationController?
     var selectedModels: (([FDAssetModel]) -> Void)?
     
@@ -236,17 +244,72 @@ class FDAssetController: UIViewController {
         collection.alwaysBounceVertical = true
         collection.register(FDAssetCell.self, forCellWithReuseIdentifier: NSStringFromClass(FDAssetCell.self))
         collection.translatesAutoresizingMaskIntoConstraints = false
+        
+        let bottomView: UIView = UIView(frame: .zero)
+        self.view.addSubview(bottomView)
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        let previewButton: UIButton = UIButton(frame: .zero)
+        self.view.addSubview(previewButton)
+        self.previewButton = previewButton
+        previewButton.translatesAutoresizingMaskIntoConstraints = false
+        previewButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        previewButton.setTitle("预览", for: .normal)
+        previewButton.setTitle("预览", for: .disabled)
+        previewButton.setTitleColor(UIColor.black, for: .normal)
+        previewButton.setTitleColor(UIColor.lightGray, for: .disabled)
+        
+        let confirmButton: UIButton = UIButton(frame: .zero)
+        self.view.addSubview(confirmButton)
+        self.confirmButton = confirmButton
+        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+        confirmButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        confirmButton.layer.cornerRadius = 22.5
+        confirmButton.layer.masksToBounds = true
+        confirmButton.setTitle("确定", for: .normal)
+        confirmButton.setTitleColor(UIColor.white, for: .normal)
+        confirmButton.backgroundColor = UIColor(fd_hexString: "#CDCED4")
+        
         if #available(iOS 11.0, *) {
             (collection.top == self.view.safeAreaLayoutGuide.top).isActive = true
             (collection.left == self.view.safeAreaLayoutGuide.left).isActive = true
-            (collection.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
+            (collection.bottom == self.view.safeAreaLayoutGuide.bottom - 75).isActive = true
             (collection.right == self.view.safeAreaLayoutGuide.right).isActive = true
         } else {
             (collection.top == self.topLayoutGuide.bottom).isActive = true
             (collection.left == self.view.left).isActive = true
-            (collection.bottom == self.bottomLayoutGuide.top).isActive = true
+            (collection.bottom == self.bottomLayoutGuide.top - 75).isActive = true
             (collection.right == self.view.right).isActive = true
         }
+        
+        (bottomView.top == collection.bottom).isActive = true
+        (bottomView.left == self.view.left).isActive = true
+        (bottomView.right == self.view.right).isActive = true
+        if #available(iOS 11.0, *) {
+            (bottomView.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
+        } else {
+            (bottomView.bottom == self.bottomLayoutGuide.top).isActive = true
+        }
+        
+        (previewButton.centerY == bottomView.centerY).isActive = true
+        if #available(iOS 11.0, *) {
+            (previewButton.left == self.view.safeAreaLayoutGuide.left + 26).isActive = true
+        } else {
+            (previewButton.left == self.view.left + 26).isActive = true
+        }
+        
+        (confirmButton.centerY == bottomView.centerY).isActive = true
+        (confirmButton.width == 145).isActive = true
+        (confirmButton.height == 45).isActive = true
+        if #available(iOS 11.0, *) {
+            (confirmButton.right == self.view.safeAreaLayoutGuide.right - 26).isActive = true
+        } else {
+            (confirmButton.right == self.view.right - 26).isActive = true
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.collection?.reloadData()
     }
     
     @objc
@@ -347,7 +410,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
         } else {
             let types: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportSelectAssetMediaTypes() ?? [.audio, .image, .video, .video]
             if !types.contains(model.asset?.mediaType ?? .unknown) {
-                print("不支持的选择类型")
+                debugPrint("不支持的选择类型")
                 return
             }
             
@@ -373,7 +436,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                     }
                     let imageMax: Int = controller.imagePickerDelegate?.imagePickerSelectMaxImageCount() ?? 9
                     if imageValue + 1 > imageMax {
-                        print("image 超过上限")
+                        debugPrint("image 超过上限")
                         return
                     }
                 }
@@ -386,7 +449,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                     }
                     let videoMax: Int = controller.imagePickerDelegate?.imagePickerSelectMaxVideoCount() ?? 9
                     if videoValue + 1 > videoMax {
-                        print("video 超过上限")
+                        debugPrint("video 超过上限")
                         return
                     }
                 }

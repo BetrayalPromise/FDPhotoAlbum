@@ -87,13 +87,10 @@ open class FDImagePickerController: UINavigationController {
         }
     }
     
-    private var isAppearSelect: Bool = false
-    
-    
     /// 是否出现选择
-    convenience init(isAppearSelect: Bool) {
-        self.init(rootViewController: FDCollectionController())
-        self.isAppearSelect = isAppearSelect
+    convenience init(isAppearAsset: Bool) {
+        let controller: FDCollectionController = FDCollectionController(isAppearAsset: isAppearAsset)
+        self.init(rootViewController: controller)
     }
     
     override open func viewDidLoad() {
