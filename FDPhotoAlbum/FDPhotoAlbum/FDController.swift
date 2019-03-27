@@ -12,44 +12,48 @@ class FDCollectionController: UIViewController {
     convenience init(isAppearAsset: Bool) {
         self.init()
         self.isAppearAsset = isAppearAsset
+        self.dataForUserInterface()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "相册"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Ablum.bundle/icon_back"), style: .done, target: self, action: #selector(handle(barButtonItem:)))
-       
-        let currentStatus = PHPhotoLibrary.authorizationStatus()
-        switch currentStatus {
-        case .authorized:
-             buildUserInterface()
-            self.getDatas()
-            break
-        case .denied:
-            showEmpty()
-            break
-        case .notDetermined:
-            PHPhotoLibrary.requestAuthorization { [weak self] (status) in
-                guard let `self` = self else { return }
-                if status == .authorized {
-                     self.buildUserInterface()
-                    self.getDatas()
-                } else {
-                    self.showEmpty()
-                }
-            }
-            break
-        case .restricted:
-            showEmpty()
-            break
-        default:
-            break
-        }
+       self.buildUserInterface()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.collection?.reloadData()
+    }
+    
+    func dataForUserInterface() {
+        Thread.init {
+            let currentStatus = PHPhotoLibrary.authorizationStatus()
+            switch currentStatus {
+            case .authorized:
+                self.getDatas()
+                break
+            case .denied:
+                self.showEmpty()
+                break
+            case .notDetermined:
+                PHPhotoLibrary.requestAuthorization { [weak self] (status) in
+                    guard let `self` = self else { return }
+                    if status == .authorized {
+                        self.getDatas()
+                    } else {
+                        self.showEmpty()
+                    }
+                }
+                break
+            case .restricted:
+                self.showEmpty()
+                break
+            default:
+                break
+            }
+        }.start()
     }
     
     @objc
@@ -82,6 +86,10 @@ class FDCollectionController: UIViewController {
                     return false
                 })
             })
+            let loop = RunLoop.current
+            repeat {
+                loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
+            } while (self.collection?.dataSource == nil)
             if pthread_main_np() != 0 {
                 self.collection?.reloadData()
             } else {
@@ -95,6 +103,14 @@ class FDCollectionController: UIViewController {
     /// 无法获取相册数据显示
     private func showEmpty() {
         let createEmpty: () -> Void = {
+            let v: UIView = UIView()
+            self.view.addSubview(v)
+            v.backgroundColor = .white
+            (v.top == self.view.top).isActive = true
+            (v.left == self.view.left).isActive = true
+            (v.bottom == self.view.bottom).isActive = true
+            (v.right == self.view.right).isActive = true
+            
             let showInfoLabel: UILabel = UILabel(frame: .zero)
             self.view.addSubview(showInfoLabel)
             showInfoLabel.text = "您无权限访问相册"
@@ -131,34 +147,25 @@ class FDCollectionController: UIViewController {
     
     /// 获取相册数据显示
     private func buildUserInterface() {
-        let build: () -> Void = {
-            let collection: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: FDLeftFlowLayout())
-            self.view.addSubview(collection)
-            self.collection = collection
-            collection.delegate = self
-            collection.dataSource = self
-            collection.translatesAutoresizingMaskIntoConstraints = false
-            collection.register(FDCollectionCell.self, forCellWithReuseIdentifier: NSStringFromClass(FDCollectionCell.self))
-            collection.alwaysBounceVertical = true
-            collection.backgroundColor = .white
-            if #available(iOS 11.0, *) {
-                (collection.top == self.view.safeAreaLayoutGuide.top).isActive = true
-                (collection.left == self.view.safeAreaLayoutGuide.left).isActive = true
-                (collection.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
-                (collection.right == self.view.safeAreaLayoutGuide.right).isActive = true
-            } else {
-                (collection.top == self.topLayoutGuide.bottom).isActive = true
-                (collection.left == self.view.left).isActive = true
-                (collection.bottom == self.bottomLayoutGuide.top).isActive = true
-                (collection.right == self.view.right).isActive = true
-            }
-        }
-        if pthread_main_np() != 0 {
-            build()
+        let collection: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: FDLeftFlowLayout())
+        self.view.addSubview(collection)
+        self.collection = collection
+        collection.delegate = self
+        collection.dataSource = self
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.register(FDCollectionCell.self, forCellWithReuseIdentifier: NSStringFromClass(FDCollectionCell.self))
+        collection.alwaysBounceVertical = true
+        collection.backgroundColor = .white
+        if #available(iOS 11.0, *) {
+            (collection.top == self.view.safeAreaLayoutGuide.top).isActive = true
+            (collection.left == self.view.safeAreaLayoutGuide.left).isActive = true
+            (collection.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
+            (collection.right == self.view.safeAreaLayoutGuide.right).isActive = true
         } else {
-            DispatchQueue.main.async {
-                build()
-            }
+            (collection.top == self.topLayoutGuide.bottom).isActive = true
+            (collection.left == self.view.left).isActive = true
+            (collection.bottom == self.bottomLayoutGuide.top).isActive = true
+            (collection.right == self.view.right).isActive = true
         }
     }
 }
