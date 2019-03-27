@@ -28,9 +28,5 @@ extension ViewController: FDImagePickerControllerDelegate {
     func imagePickerFilerEmptyCollection() -> Bool {
         return true
     }
-    
-//    func imagePickerSupportType() -> [PHAssetMediaType] {
-//        return [.image]
-//    }
 }
 

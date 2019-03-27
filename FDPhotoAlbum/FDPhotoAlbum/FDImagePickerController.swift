@@ -9,8 +9,8 @@ public protocol FDImagePickerControllerDelegate: class {
     /// 是否过滤控制的集合
     func imagePickerFilerEmptyCollection() -> Bool
     /// 数据源过滤默认都支持 实现协议的话 数据源会留下对应 [PHAssetMediaType]包涵的数据类型
-    func imagePickerSupportType() -> [PHAssetMediaType]
-    /// 是否支持多种类型选择 例如可以选择视频和图片 前提是 上面的这个协议要支持多种类型 否则 没有意思 即为 该协议的返回值是上一个协议返回值的子集
+    func imagePickerSupportAssetMediaTypes() -> [PHAssetMediaType]
+    /// 是否支持多种类型选择 例如可以选择视频和图片 前提是 上面的这个协议要支持多种类型 否则 没有意思 即为 该协议的返回值是imagePickerSupportAssetMediaTypes()返回值的子集
     func imagePickerSupportSelectTypes() -> [PHAssetMediaType]
 }
 
@@ -25,7 +25,7 @@ extension FDImagePickerControllerDelegate {
         return true
     }
     
-    func imagePickerSupportType() -> [PHAssetMediaType] {
+    func imagePickerSupportAssetMediaTypes() -> [PHAssetMediaType] {
         return [.video, .image, .audio, .unknown]
     }
     

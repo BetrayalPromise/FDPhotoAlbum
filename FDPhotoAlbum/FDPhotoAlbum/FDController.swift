@@ -61,10 +61,10 @@ class FDCollectionController: UIViewController {
             } else {
                 self.list = models
             }
-            let types = controller.imagePickerDelegate?.imagePickerSupportType()
+            let types: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
             self.list?.forEach({ (model) in
                 model.models = model.models?.filter({ (m) -> Bool in
-                    if types?.contains(m.asset?.mediaType ?? .unknown) ?? true {
+                    if types.contains(m.asset?.mediaType ?? .unknown) {
                         return true
                     }
                     return false
