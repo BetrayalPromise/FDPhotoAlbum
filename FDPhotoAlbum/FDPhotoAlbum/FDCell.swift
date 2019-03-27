@@ -199,6 +199,7 @@ class FDAssetCell: UICollectionViewCell {
         }
         let option: PHImageRequestOptions = PHImageRequestOptions()
         option.isSynchronous = true
+        option.resizeMode = .fast
         PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
             guard let `self` = self else { return }
             self.showImageView?.image = image

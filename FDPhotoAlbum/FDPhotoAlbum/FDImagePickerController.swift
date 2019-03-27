@@ -34,6 +34,10 @@ public protocol FDImagePickerControllerDelegate: class {
      ***/
     func imagePickerSelectMaxImageCount() -> Int
     func imagePickerSelectMaxVideoCount() -> Int
+    
+    // TODO: 处理资源大小控制
+    /// 资源大小控制 单位Byte
+    func imagePickerMaxVolume() -> Double
 }
 
 extension FDImagePickerControllerDelegate {
@@ -65,6 +69,11 @@ extension FDImagePickerControllerDelegate {
     
     func imagePickerSelectMaxVideoCount() -> Int {
         return 9
+    }
+    
+    func imagePickerMaxVolume() -> Double {
+//        return 20 * 1024 * 1024
+        return 20971520
     }
 }
 
