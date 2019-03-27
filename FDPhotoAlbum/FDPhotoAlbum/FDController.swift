@@ -327,6 +327,12 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 c.updateStatus()
             }
         } else {
+            let types:  [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportSelectTypes() ?? [.audio, .image, .video]
+            if !types.contains(model.asset?.mediaType ?? .unknown) {
+                print("不支持的选择类型")
+                return
+            }
+            
             /// 选中
             var value = 0
             for m in models ?? [] {
@@ -346,5 +352,12 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 c.updateStatus()
             }
         }
+    }
+    
+    func supportSelectTypes() -> [PHAssetMediaType] {
+        guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else {
+            return [.image, .video, .audio, .unknown]
+        }
+        return controller.imagePickerDelegate?.imagePickerSupportSelectTypes() ?? [.image, .video, .audio, .unknown]
     }
 }

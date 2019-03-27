@@ -10,6 +10,8 @@ public protocol FDImagePickerControllerDelegate: class {
     func imagePickerFilerEmptyCollection() -> Bool
     /// 数据源过滤默认都支持 实现协议的话 数据源会留下对应 [PHAssetMediaType]包涵的数据类型
     func imagePickerSupportType() -> [PHAssetMediaType]
+    /// 是否支持多种类型选择 例如可以选择视频和图片 前提是 上面的这个协议要支持多种类型 否则 没有意思 即为 该协议的返回值是上一个协议返回值的子集
+    func imagePickerSupportSelectTypes() -> [PHAssetMediaType]
 }
 
 extension FDImagePickerControllerDelegate {
@@ -24,7 +26,11 @@ extension FDImagePickerControllerDelegate {
     }
     
     func imagePickerSupportType() -> [PHAssetMediaType] {
-        return [.video, .image, .audio]
+        return [.video, .image, .audio, .unknown]
+    }
+    
+    func imagePickerSupportSelectTypes() -> [PHAssetMediaType] {
+        return [.video, .image, .audio, .unknown]
     }
 }
 
@@ -37,12 +43,9 @@ open class FDImagePickerController: UINavigationController {
         }
     }
     
-    var multiple: Bool?
-    
     /// 是否开启混选模式
     convenience init(multiple: Bool) {
         self.init(rootViewController: FDCollectionController())
-        self.multiple = multiple
     }
     
     override open func viewDidLoad() {

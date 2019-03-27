@@ -8,14 +8,15 @@
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
+            condition = "value == 8"
             continueAfterRunningActions = "No"
-            filePath = "FDPhotoAlbum/ViewController.swift"
-            timestampString = "575285324.577911"
+            filePath = "FDPhotoAlbum/FDPhotoAlbum/FDController.swift"
+            timestampString = "575342961.951757"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "imagePickerSupportType()"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "select(by:with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

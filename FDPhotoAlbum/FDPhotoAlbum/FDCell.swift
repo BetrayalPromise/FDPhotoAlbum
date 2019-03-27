@@ -80,6 +80,7 @@ class FDCollectionCell: UICollectionViewCell {
 protocol FDAssetCellSelectProtocal: class {
     func select(by cell: FDAssetCell, with model: FDAssetModel?)
     func selectReachMax() -> Bool
+    func supportSelectTypes() -> [PHAssetMediaType]
 }
 
 class FDAssetCell: UICollectionViewCell {
@@ -196,20 +197,27 @@ class FDAssetCell: UICollectionViewCell {
             self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
             self.countLabel?.text = nil
         }
-        if model?.isSelected ?? false {
-            self.coverView?.isHidden = true
-        } else {
-            if self.delegate?.selectReachMax() ?? false {
-                self.coverView?.isHidden = false
-            } else {
-                self.coverView?.isHidden = true
-            }
-        }
         let option: PHImageRequestOptions = PHImageRequestOptions()
         option.isSynchronous = true
         PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
             guard let `self` = self else { return }
             self.showImageView?.image = image
+        }
+        let types: [PHAssetMediaType] = self.delegate?.supportSelectTypes() ?? [.image, .video, .audio, .unknown]
+        if !types.contains(model?.asset?.mediaType ?? .unknown) {
+            self.selectButton?.isHidden = true
+            self.coverView?.isHidden = false
+        } else {
+            self.selectButton?.isHidden = false
+            if model?.isSelected ?? false {
+                self.coverView?.isHidden = true
+            } else {
+                if self.delegate?.selectReachMax() ?? false {
+                    self.coverView?.isHidden = false
+                } else {
+                    self.coverView?.isHidden = true
+                }
+            }
         }
     }
     
@@ -223,21 +231,28 @@ class FDAssetCell: UICollectionViewCell {
     }
     
     func updateStatus() {
-        if model?.isSelected ?? false {
-            self.coverView?.isHidden = true
-        } else {
-            if self.delegate?.selectReachMax() ?? false {
-                self.coverView?.isHidden = false
-            } else {
-                self.coverView?.isHidden = true
-            }
-        }
         if self.model?.isSelected ?? false {
             self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_selected"), for: .normal)
             self.countLabel?.text = "\(self.model?.selectedCount ?? 0)"
         } else {
             self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
             self.countLabel?.text = nil
+        }
+        let types: [PHAssetMediaType] = self.delegate?.supportSelectTypes() ?? [.image, .video, .audio, .unknown]
+        if !types.contains(model?.asset?.mediaType ?? .unknown) {
+            self.selectButton?.isHidden = true
+            self.coverView?.isHidden = false
+        } else {
+            self.selectButton?.isHidden = false
+            if model?.isSelected ?? false {
+                self.coverView?.isHidden = true
+            } else {
+                if self.delegate?.selectReachMax() ?? false {
+                    self.coverView?.isHidden = false
+                } else {
+                    self.coverView?.isHidden = true
+                }
+            }
         }
     }
 }

@@ -14,23 +14,23 @@ class ViewController: UIViewController {
     
     @objc
     func handle(button: UIButton) {
-        let controller = FDImagePickerController(multiple: true)
+        let controller = FDImagePickerController.init(multiple: true)
         controller.imagePickerDelegate = self
         self.present(controller, animated: true, completion: nil)
     }
 }
 
 extension ViewController: FDImagePickerControllerDelegate {
-    func imagePickerAllowMultiple() -> Bool {
-        return true
+    func imagePickerSupportSelectTypes() -> [PHAssetMediaType] {
+        return [.image]
     }
     
     func imagePickerFilerEmptyCollection() -> Bool {
         return true
     }
     
-    func imagePickerSupportType() -> [PHAssetMediaType] {
-        return [.image]
-    }
+//    func imagePickerSupportType() -> [PHAssetMediaType] {
+//        return [.image]
+//    }
 }
 
