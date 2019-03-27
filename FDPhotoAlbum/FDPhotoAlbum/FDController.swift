@@ -8,6 +8,7 @@ class FDCollectionController: UIViewController {
     private var list: [FDAlbumModel]?
     private var collection: UICollectionView?
     var isAppearAsset: Bool?
+    var layoutFlag = false
     
     convenience init(isAppearAsset: Bool) {
         self.init()
@@ -63,6 +64,7 @@ class FDCollectionController: UIViewController {
     
     /// 获取数据
     private func getDatas() {
+        // TODO: 添加loading处理
         DataSource.getAlbums { (models) in
             guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
             if controller.imagePickerDelegate?.imagePickerFilerEmptyCollection() ?? true {
@@ -89,11 +91,13 @@ class FDCollectionController: UIViewController {
             let loop = RunLoop.current
             repeat {
                 loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
-            } while (self.collection?.dataSource == nil)
+            } while (self.layoutFlag == false)
             if pthread_main_np() != 0 {
+                 // TODO: 取消loading处理
                 self.collection?.reloadData()
             } else {
                 DispatchQueue.main.async {
+                    // TODO: 取消loading处理
                     self.collection?.reloadData()
                 }
             }
@@ -167,6 +171,7 @@ class FDCollectionController: UIViewController {
             (collection.bottom == self.bottomLayoutGuide.top).isActive = true
             (collection.right == self.view.right).isActive = true
         }
+        self.layoutFlag = true
     }
 }
 
@@ -259,11 +264,9 @@ class FDAssetController: UIViewController {
         self.view.addSubview(previewButton)
         self.previewButton = previewButton
         previewButton.translatesAutoresizingMaskIntoConstraints = false
-        previewButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        previewButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         previewButton.setTitle("预览", for: .normal)
-        previewButton.setTitle("预览", for: .disabled)
-        previewButton.setTitleColor(UIColor.black, for: .normal)
-        previewButton.setTitleColor(UIColor.lightGray, for: .disabled)
+        previewButton.setTitleColor(UIColor(fd_hexString: "#CDCED4"), for: .normal)
         
         let confirmButton: UIButton = UIButton(frame: .zero)
         self.view.addSubview(confirmButton)
@@ -327,6 +330,22 @@ class FDAssetController: UIViewController {
     @objc
     func cancelButtonClick() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func updateBottomBar(value: Int) {
+        if value > 0 {
+            self.previewButton?.setTitleColor(UIColor.init(fd_hexString: "#333333"), for: .normal)
+            self.previewButton?.isUserInteractionEnabled = true
+            self.confirmButton?.backgroundColor = UIColor(fd_hexString: "#00BEBE")
+            self.confirmButton?.isUserInteractionEnabled = true
+            self.confirmButton?.setTitle("确定(\(value))", for: .normal)
+        } else {
+            self.previewButton?.setTitleColor(UIColor.init(fd_hexString: "#CDCED4"), for: .normal)
+            self.previewButton?.isUserInteractionEnabled = false
+            self.confirmButton?.backgroundColor = UIColor(fd_hexString: "#CDCED4")
+            self.confirmButton?.isUserInteractionEnabled = false
+            self.confirmButton?.setTitle("确定", for: .normal)
+        }
     }
     
     deinit {
@@ -410,6 +429,14 @@ extension FDAssetController: FDAssetCellSelectProtocal {
             }
             model.isSelected = false
             model.selectedCount = 0
+            
+            var value = 0
+            for m in self.models ?? [] {
+                if m.isSelected == true {
+                    value += 1
+                }
+            }
+            self.updateBottomBar(value: value)
             controller.imagePickerDelegate?.imagePicker(controller, changedSelectedModel: model)
             for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
                 c.updateStatus()
@@ -463,6 +490,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
             }
             model.isSelected = true
             model.selectedCount = value + 1
+            self.updateBottomBar(value: value + 1)
             controller.imagePickerDelegate?.imagePicker(controller, changedSelectedModel: model)
             for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
                 c.updateStatus()
