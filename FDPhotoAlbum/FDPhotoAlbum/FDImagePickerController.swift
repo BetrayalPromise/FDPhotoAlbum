@@ -1,7 +1,6 @@
 import UIKit
 
 class FDImagePickerController: UINavigationController {
-    
     /// 是否出现选择
     convenience init(isAppearAsset: Bool) {
         let controller: FDCollectionController = FDCollectionController(isAppearAsset: isAppearAsset)
@@ -21,5 +20,4 @@ class FDImagePickerController: UINavigationController {
     deinit {
         FDPhotoAlbum.default.delegate = nil
     }
-
 }

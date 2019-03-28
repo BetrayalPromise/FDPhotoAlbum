@@ -66,9 +66,9 @@ class FDCollectionController: UIViewController {
     private func getDatas() {
         // TODO: 添加loading处理
         /// 类型支持过滤
-        let supports: [PHAssetMediaType] = FDPhotoAlbum.default.delegate?.abumSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
+        let supports: [PHAssetMediaType] = FDPhotoAlbum.default.delegate?.albumSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
         DataSource.getAlbums(supports: supports) { (models) in
-            if FDPhotoAlbum.default.delegate?.abumFilerEmptyCollection() ?? true {
+            if FDPhotoAlbum.default.delegate?.albumFilerEmptyCollection() ?? true {
                 self.list = models.filter({ (m) -> Bool in
                     if m.result?.count ?? 0 > 0 {
                         return true
@@ -79,7 +79,7 @@ class FDCollectionController: UIViewController {
             } else {
                 self.list = models
             }
-            let unsupports: [String] = FDPhotoAlbum.default.delegate?.abumUnSupportTypes() ?? []
+            let unsupports: [String] = FDPhotoAlbum.default.delegate?.albumUnSupportTypes() ?? []
             self.list?.forEach({ (model) in
                 model.models = model.models?.filter({ (m) -> Bool in
                     /// 后缀过滤
@@ -418,7 +418,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 value += 1
             }
         }
-        if FDPhotoAlbum.default.delegate?.abumMaxSelectedCount() ?? 9 <= value {
+        if FDPhotoAlbum.default.delegate?.albumMaxSelectedCount() ?? 9 <= value {
             return true
         } else {
             return false
@@ -446,12 +446,12 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 }
             }
             self.updateBottomBar(value: value)
-            FDPhotoAlbum.default.delegate?.abum(didChangedModel: model)
+            FDPhotoAlbum.default.delegate?.album(didChangedModel: model)
             for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
                 c.updateStatus()
             }
         } else {
-            let types: [PHAssetMediaType] = FDPhotoAlbum.default.delegate?.abumSupportSelectAssetMediaTypes() ?? [.audio, .image, .video, .video]
+            let types: [PHAssetMediaType] = FDPhotoAlbum.default.delegate?.albumSupportSelectAssetMediaTypes() ?? [.audio, .image, .video, .video]
             if !types.contains(model.asset?.mediaType ?? .unknown) {
                 debugPrint("不支持的选择类型")
                 return
@@ -464,9 +464,9 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                     value += 1
                 }
             }
-            if FDPhotoAlbum.default.delegate?.abumMaxSelectedCount() ?? 9 == value + 1 {
+            if FDPhotoAlbum.default.delegate?.albumMaxSelectedCount() ?? 9 == value + 1 {
                 debugPrint("达到最大值")
-            } else if (FDPhotoAlbum.default.delegate?.abumMaxSelectedCount() ?? 9 <= value) {
+            } else if (FDPhotoAlbum.default.delegate?.albumMaxSelectedCount() ?? 9 <= value) {
                 debugPrint("超过最大值")
                 return
             } else {
@@ -477,7 +477,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                             imageValue += 1
                         }
                     }
-                    let imageMax: Int = FDPhotoAlbum.default.delegate?.abumSelectMaxImageCount() ?? 9
+                    let imageMax: Int = FDPhotoAlbum.default.delegate?.albumSelectMaxImageCount() ?? 9
                     if imageValue + 1 > imageMax {
                         debugPrint("image 超过上限")
                         return
@@ -490,7 +490,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                             videoValue += 1
                         }
                     }
-                    let videoMax: Int = FDPhotoAlbum.default.delegate?.abumSelectMaxVideoCount() ?? 9
+                    let videoMax: Int = FDPhotoAlbum.default.delegate?.albumSelectMaxVideoCount() ?? 9
                     if videoValue + 1 > videoMax {
                         debugPrint("video 超过上限")
                         return
@@ -500,7 +500,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
             model.isSelected = true
             model.selectedCount = value + 1
             self.updateBottomBar(value: value + 1)
-            FDPhotoAlbum.default.delegate?.abum(didChangedModel: model)
+            FDPhotoAlbum.default.delegate?.album(didChangedModel: model)
             for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
                 c.updateStatus()
             }
@@ -508,6 +508,6 @@ extension FDAssetController: FDAssetCellSelectProtocal {
     }
     
     func supportSelectTypes() -> [PHAssetMediaType] {
-        return FDPhotoAlbum.default.delegate?.abumSupportSelectAssetMediaTypes() ?? [.image, .video, .audio, .unknown]
+        return FDPhotoAlbum.default.delegate?.albumSupportSelectAssetMediaTypes() ?? [.image, .video, .audio, .unknown]
     }
 }

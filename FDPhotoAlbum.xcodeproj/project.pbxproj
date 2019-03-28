@@ -157,12 +157,18 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1010;
+				TargetAttributes = {
+					2A8B31FBB9BC979EBC4D9443D0BA06DB = {
+						LastSwiftMigration = 1020;
+					};
+				};
 			};
 			buildConfigurationList = 3537F10E625120342DF41E16F6E9BEAF /* Build configuration list for PBXProject "FDPhotoAlbum" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				en,
 				Base,
 			);
 			mainGroup = 7BBEA4DCD266A6B3E340AED8EBA1C87D;
@@ -298,6 +304,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nio.FDAlbum;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -381,6 +388,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nio.FDAlbum;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

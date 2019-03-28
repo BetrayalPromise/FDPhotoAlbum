@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -130,19 +130,19 @@
 		0101A1D01BADA52059D3D220D42C386A /* FDVerifyCodeValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FDVerifyCodeValidator.swift; path = FDFoundation/Util/Validator/FDVerifyCodeValidator.swift; sourceTree = "<group>"; };
 		0591420AEEBB4198161067FC86C7BF94 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserDefaultsExtensions.swift; path = FDFoundation/Extension/Foundation/UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		09D7786C5EF1CB65E9B9250BD9FC4EE2 /* UILabelExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UILabelExtension.swift; path = FDFoundation/Extension/UIKit/UILabelExtension.swift; sourceTree = "<group>"; };
-		0B744B0D3318AD43C22EB87346508755 /* aes_ni.c */ = {isa = PBXFileReference; includeInIndex = 1; name = aes_ni.c; path = FDFoundation/ZipArchive/minizip/aes/aes_ni.c; sourceTree = "<group>"; };
-		10987EE03FCA91765206A25FF70451C4 /* fileenc.c */ = {isa = PBXFileReference; includeInIndex = 1; name = fileenc.c; path = FDFoundation/ZipArchive/minizip/aes/fileenc.c; sourceTree = "<group>"; };
-		1A8ADA856A8192DC95A0E35C12EE582B /* hmac.c */ = {isa = PBXFileReference; includeInIndex = 1; name = hmac.c; path = FDFoundation/ZipArchive/minizip/aes/hmac.c; sourceTree = "<group>"; };
+		0B744B0D3318AD43C22EB87346508755 /* aes_ni.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = aes_ni.c; path = FDFoundation/ZipArchive/minizip/aes/aes_ni.c; sourceTree = "<group>"; };
+		10987EE03FCA91765206A25FF70451C4 /* fileenc.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = fileenc.c; path = FDFoundation/ZipArchive/minizip/aes/fileenc.c; sourceTree = "<group>"; };
+		1A8ADA856A8192DC95A0E35C12EE582B /* hmac.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = hmac.c; path = FDFoundation/ZipArchive/minizip/aes/hmac.c; sourceTree = "<group>"; };
 		1AF3B7F99B410404364BBF8898C02BC0 /* Pods-FDPhotoAlbum-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-FDPhotoAlbum-frameworks.sh"; sourceTree = "<group>"; };
 		1CB1B92E6268FA5F24919406F4DAD33A /* fd_zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_zip.h; path = FDFoundation/ZipArchive/minizip/fd_zip.h; sourceTree = "<group>"; };
-		1CCEC50837CD12FFA52530DF01072680 /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = unzip.c; path = FDFoundation/ZipArchive/minizip/unzip.c; sourceTree = "<group>"; };
+		1CCEC50837CD12FFA52530DF01072680 /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = FDFoundation/ZipArchive/minizip/unzip.c; sourceTree = "<group>"; };
 		210337999B1DB05F466ECC0861971C78 /* StringExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = FDFoundation/Extension/SwiftStdlib/StringExtensions.swift; sourceTree = "<group>"; };
-		225F74335A7E511A19712AAA04CBAAB6 /* pwd2key.c */ = {isa = PBXFileReference; includeInIndex = 1; name = pwd2key.c; path = FDFoundation/ZipArchive/minizip/aes/pwd2key.c; sourceTree = "<group>"; };
+		225F74335A7E511A19712AAA04CBAAB6 /* pwd2key.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = pwd2key.c; path = FDFoundation/ZipArchive/minizip/aes/pwd2key.c; sourceTree = "<group>"; };
 		22AF1258DAF129965CBE052DB7EF3F97 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIViewControllerExtension.swift; path = FDFoundation/Extension/UIKit/UIViewControllerExtension.swift; sourceTree = "<group>"; };
-		284F7F406C1356FAD03C83597B816C9B /* FDFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FDFoundation.framework; path = FDFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		284F7F406C1356FAD03C83597B816C9B /* FDFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FDFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B786EBDB0AADC4FE47854446346EB34 /* DeviceExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DeviceExtension.swift; path = FDFoundation/Extension/Foundation/DeviceExtension.swift; sourceTree = "<group>"; };
 		2FF7742B83C84F987841E4F56C1B8678 /* fd_sha1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_sha1.h; path = FDFoundation/ZipArchive/minizip/aes/fd_sha1.h; sourceTree = "<group>"; };
-		30298E45B0A16FC0ED8A6AB9B9A4A6C9 /* SweetAutoLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SweetAutoLayout.framework; path = SweetAutoLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		30298E45B0A16FC0ED8A6AB9B9A4A6C9 /* SweetAutoLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SweetAutoLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3070BC0B49C35EE04F8FE0C3A3E5CE96 /* IntExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntExtensions.swift; path = FDFoundation/Extension/SwiftStdlib/IntExtensions.swift; sourceTree = "<group>"; };
 		324046DE9F9EAB31B839307FBCD2EFD7 /* Pods-FDPhotoAlbum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FDPhotoAlbum.debug.xcconfig"; sourceTree = "<group>"; };
 		337F05E4029571A8184C2534819550B7 /* NSPredicateExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSPredicateExtensions.swift; path = FDFoundation/Extension/Foundation/NSPredicateExtensions.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		3B2329BF80C14D2755A78D9D6C852063 /* UIViewExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIViewExtension.swift; path = FDFoundation/Extension/UIKit/UIViewExtension.swift; sourceTree = "<group>"; };
 		4043F74D55B632BC4DC09524CF07E00A /* SignedIntegerExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignedIntegerExtensions.swift; path = FDFoundation/Extension/SwiftStdlib/SignedIntegerExtensions.swift; sourceTree = "<group>"; };
 		40D3AAFD7F9AED5122A712E53FD7F637 /* ArrayExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ArrayExtensions.swift; path = FDFoundation/Extension/SwiftStdlib/ArrayExtensions.swift; sourceTree = "<group>"; };
-		40F3191B61F3C126B4AED22D332B5F68 /* sha1.c */ = {isa = PBXFileReference; includeInIndex = 1; name = sha1.c; path = FDFoundation/ZipArchive/minizip/aes/sha1.c; sourceTree = "<group>"; };
+		40F3191B61F3C126B4AED22D332B5F68 /* sha1.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = FDFoundation/ZipArchive/minizip/aes/sha1.c; sourceTree = "<group>"; };
 		410D11AA36132DE323663FAD777D08AB /* FDZipArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FDZipArchive.h; path = FDFoundation/ZipArchive/FDZipArchive.h; sourceTree = "<group>"; };
 		4327F7DB11078E8E29B4ADAFBCACE4C3 /* URLExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLExtensions.swift; path = FDFoundation/Extension/Foundation/URLExtensions.swift; sourceTree = "<group>"; };
 		46D9F9B1BBA8B75241537E5D10F6CF62 /* fd_aestab.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_aestab.h; path = FDFoundation/ZipArchive/minizip/aes/fd_aestab.h; sourceTree = "<group>"; };
@@ -172,18 +172,18 @@
 		71101172E795E01996A47194B1563E93 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIImageViewExtension.swift; path = FDFoundation/Extension/UIKit/UIImageViewExtension.swift; sourceTree = "<group>"; };
 		723C5D03AD321EF3D6359BBA80F3A03D /* FDFoundation.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FDFoundation.modulemap; sourceTree = "<group>"; };
 		737F8DB44277B385EAD1E2159520450A /* FDFileManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FDFileManager.h; path = FDFoundation/FileManager/FDFileManager.h; sourceTree = "<group>"; };
-		73C8E39E0D86DE08D3BAF02C281E2014 /* aescrypt.c */ = {isa = PBXFileReference; includeInIndex = 1; name = aescrypt.c; path = FDFoundation/ZipArchive/minizip/aes/aescrypt.c; sourceTree = "<group>"; };
+		73C8E39E0D86DE08D3BAF02C281E2014 /* aescrypt.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = aescrypt.c; path = FDFoundation/ZipArchive/minizip/aes/aescrypt.c; sourceTree = "<group>"; };
 		74882A03A569C885E4493186D31B6A44 /* Pods-FDPhotoAlbum-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-FDPhotoAlbum-dummy.m"; sourceTree = "<group>"; };
 		7730C99AAE63E693A9F9EB83193BDDB3 /* FDPhoneNoValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FDPhoneNoValidator.swift; path = FDFoundation/Util/Validator/FDPhoneNoValidator.swift; sourceTree = "<group>"; };
-		779B69A1F8BC6C17E732A889581DEC81 /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi.c; path = FDFoundation/ZipArchive/minizip/ioapi.c; sourceTree = "<group>"; };
+		779B69A1F8BC6C17E732A889581DEC81 /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = FDFoundation/ZipArchive/minizip/ioapi.c; sourceTree = "<group>"; };
 		796619C8ED5B8E495E9A2BB8E58CFFE3 /* NSAttributedStringExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSAttributedStringExtensions.swift; path = FDFoundation/Extension/Foundation/NSAttributedStringExtensions.swift; sourceTree = "<group>"; };
-		7B19AB1E9F7F25D0994CE0498DDB865D /* prng.c */ = {isa = PBXFileReference; includeInIndex = 1; name = prng.c; path = FDFoundation/ZipArchive/minizip/aes/prng.c; sourceTree = "<group>"; };
-		7EF6EE15AA26C0954CCEA869C7723B9F /* ioapi_mem.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi_mem.c; path = FDFoundation/ZipArchive/minizip/ioapi_mem.c; sourceTree = "<group>"; };
+		7B19AB1E9F7F25D0994CE0498DDB865D /* prng.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = prng.c; path = FDFoundation/ZipArchive/minizip/aes/prng.c; sourceTree = "<group>"; };
+		7EF6EE15AA26C0954CCEA869C7723B9F /* ioapi_mem.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ioapi_mem.c; path = FDFoundation/ZipArchive/minizip/ioapi_mem.c; sourceTree = "<group>"; };
 		808B29F6344B327A71F9DC3730049C1B /* Pods-FDPhotoAlbum-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FDPhotoAlbum-acknowledgements.markdown"; sourceTree = "<group>"; };
 		80CEB73C74865DA39C82D0CA02020F83 /* FDFileManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FDFileManager.m; path = FDFoundation/FileManager/FDFileManager.m; sourceTree = "<group>"; };
-		80EBBC343CC8D6760EA50EA376180B4C /* aeskey.c */ = {isa = PBXFileReference; includeInIndex = 1; name = aeskey.c; path = FDFoundation/ZipArchive/minizip/aes/aeskey.c; sourceTree = "<group>"; };
+		80EBBC343CC8D6760EA50EA376180B4C /* aeskey.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = aeskey.c; path = FDFoundation/ZipArchive/minizip/aes/aeskey.c; sourceTree = "<group>"; };
 		8325974C56B12BBFED6A9EBE21C9ADEB /* fd_crypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_crypt.h; path = FDFoundation/ZipArchive/minizip/fd_crypt.h; sourceTree = "<group>"; };
-		8802FD980E31CE9EBE966ED4CCE6875A /* ioapi_buf.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi_buf.c; path = FDFoundation/ZipArchive/minizip/ioapi_buf.c; sourceTree = "<group>"; };
+		8802FD980E31CE9EBE966ED4CCE6875A /* ioapi_buf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ioapi_buf.c; path = FDFoundation/ZipArchive/minizip/ioapi_buf.c; sourceTree = "<group>"; };
 		88FB157DAA05A543A722C3A8EFD37C24 /* FDFileHash.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FDFileHash.h; path = FDFoundation/FileMD5Hash/Library/FDFileHash.h; sourceTree = "<group>"; };
 		8C33C0B6942726D5FB51507F79B4A051 /* fd_ioapi_mem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_ioapi_mem.h; path = FDFoundation/ZipArchive/minizip/fd_ioapi_mem.h; sourceTree = "<group>"; };
 		9232B418ED60F168F3445865E77EC695 /* Pods-FDPhotoAlbum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FDPhotoAlbum.release.xcconfig"; sourceTree = "<group>"; };
@@ -192,10 +192,10 @@
 		9762E2E4E0D5C468D2CB3B67EE1E8FB2 /* UIFontExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIFontExtension.swift; path = FDFoundation/Extension/UIKit/UIFontExtension.swift; sourceTree = "<group>"; };
 		979EE3757CE0D92A411414F20FF7FE60 /* NSLayoutConstraintExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSLayoutConstraintExtension.swift; path = FDFoundation/Extension/UIKit/NSLayoutConstraintExtension.swift; sourceTree = "<group>"; };
 		9B2DB37B16CECE679E1A7F00344FF7AD /* Pods-FDPhotoAlbum.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-FDPhotoAlbum.modulemap"; sourceTree = "<group>"; };
-		9C9272DF9631AD272648B6E204A0916F /* aestab.c */ = {isa = PBXFileReference; includeInIndex = 1; name = aestab.c; path = FDFoundation/ZipArchive/minizip/aes/aestab.c; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9C9272DF9631AD272648B6E204A0916F /* aestab.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = aestab.c; path = FDFoundation/ZipArchive/minizip/aes/aestab.c; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9EBF7617DD5295C3C2239400B43C90F9 /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIAlertControllerExtension.swift; path = FDFoundation/Extension/UIKit/UIAlertControllerExtension.swift; sourceTree = "<group>"; };
-		A00C4DA8A6772C66F0C038D975C352A1 /* Pods_FDPhotoAlbum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_FDPhotoAlbum.framework; path = "Pods-FDPhotoAlbum.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00C4DA8A6772C66F0C038D975C352A1 /* Pods_FDPhotoAlbum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FDPhotoAlbum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A14A8594483CB9AC929D9E2BBA862346 /* SweetAutoLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SweetAutoLayout.xcconfig; sourceTree = "<group>"; };
 		A22381D5EB803FC3BFAA7047544B8D6E /* NSMutableDataExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSMutableDataExtension.swift; path = FDFoundation/Extension/SwiftStdlib/NSMutableDataExtension.swift; sourceTree = "<group>"; };
 		A5B7CC5FBE3E7E7C121E9A9254158440 /* SweetAutoLayout-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SweetAutoLayout-Info.plist"; sourceTree = "<group>"; };
@@ -207,7 +207,7 @@
 		B432AD3D985FD1A0802247715D5D857D /* FDFoundation.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FDFoundation.xcconfig; sourceTree = "<group>"; };
 		B60784F2A03ED26D9E0D4F2AA48EB696 /* FDFoundation-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FDFoundation-dummy.m"; sourceTree = "<group>"; };
 		B6588B262B11088B36C047B11E999D46 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		B7DA0F98BB47D8BD09CA9282C7153983 /* crypt.c */ = {isa = PBXFileReference; includeInIndex = 1; name = crypt.c; path = FDFoundation/ZipArchive/minizip/crypt.c; sourceTree = "<group>"; };
+		B7DA0F98BB47D8BD09CA9282C7153983 /* crypt.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = crypt.c; path = FDFoundation/ZipArchive/minizip/crypt.c; sourceTree = "<group>"; };
 		BAA4178489F5F6B7241ADD729F6243FC /* fd_brg_types.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_brg_types.h; path = FDFoundation/ZipArchive/minizip/aes/fd_brg_types.h; sourceTree = "<group>"; };
 		BD3F76B02CA05081FDDC93055147A0DB /* Pods-FDPhotoAlbum-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FDPhotoAlbum-acknowledgements.plist"; sourceTree = "<group>"; };
 		BF6AFB280D6C592554C7E45175FC3546 /* fd_pwd2key.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_pwd2key.h; path = FDFoundation/ZipArchive/minizip/aes/fd_pwd2key.h; sourceTree = "<group>"; };
@@ -233,13 +233,13 @@
 		E7A3D626E806D1746A2B0E53783982E7 /* fd_hmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_hmac.h; path = FDFoundation/ZipArchive/minizip/aes/fd_hmac.h; sourceTree = "<group>"; };
 		EB7A88241F3AA453B9492A3BEF00FD69 /* UIButtonExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIButtonExtension.swift; path = FDFoundation/Extension/UIKit/UIButtonExtension.swift; sourceTree = "<group>"; };
 		EB7C5E460CE1A6548F1EDC318A3DB44A /* fd_ioapi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_ioapi.h; path = FDFoundation/ZipArchive/minizip/fd_ioapi.h; sourceTree = "<group>"; };
-		F05E488CC432AF642D5E5B8A02637AE3 /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = zip.c; path = FDFoundation/ZipArchive/minizip/zip.c; sourceTree = "<group>"; };
+		F05E488CC432AF642D5E5B8A02637AE3 /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = zip.c; path = FDFoundation/ZipArchive/minizip/zip.c; sourceTree = "<group>"; };
 		F064D1A09FCBB67DA72F277BF6F84B1F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
 		F099B4532F2E3F92CACEA286B20C9D15 /* SweetAutoLayout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SweetAutoLayout.modulemap; sourceTree = "<group>"; };
 		F187133A47427C88B31A0BE508E5F935 /* fd_prng.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fd_prng.h; path = FDFoundation/ZipArchive/minizip/aes/fd_prng.h; sourceTree = "<group>"; };
 		F1EFFF6B0E03D4114B477FB479209B46 /* OptionalExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OptionalExtensions.swift; path = FDFoundation/Extension/SwiftStdlib/OptionalExtensions.swift; sourceTree = "<group>"; };
 		F2432EF41F0FBCC09004842329417505 /* AES128.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AES128.swift; path = FDFoundation/Util/Encrypt/AES128.swift; sourceTree = "<group>"; };
-		F3442A4F3AB0E703F0F81D93089EE38A /* minishared.c */ = {isa = PBXFileReference; includeInIndex = 1; name = minishared.c; path = FDFoundation/ZipArchive/minizip/minishared.c; sourceTree = "<group>"; };
+		F3442A4F3AB0E703F0F81D93089EE38A /* minishared.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = minishared.c; path = FDFoundation/ZipArchive/minizip/minishared.c; sourceTree = "<group>"; };
 		F96C80222E90001C9AC1A7816DF7FC37 /* DoubleExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DoubleExtensions.swift; path = FDFoundation/Extension/SwiftStdlib/DoubleExtensions.swift; sourceTree = "<group>"; };
 		FC3E4E8F3B6E7C1C1040EB8A61219FA9 /* FDNameValidation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FDNameValidation.swift; path = FDFoundation/Util/Validator/FDNameValidation.swift; sourceTree = "<group>"; };
 		FE443F0DFDE4DF215E58221CADE09316 /* CodableExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CodableExtensions.swift; path = FDFoundation/Extension/SwiftStdlib/CodableExtensions.swift; sourceTree = "<group>"; };
@@ -472,7 +472,6 @@
 				A7A161183DDAAE190D1787D830119A3B /* SweetAutoLayout.swift */,
 				E77F9527EC3A7430F17F96D61F29EA9B /* Support Files */,
 			);
-			name = SweetAutoLayout;
 			path = SweetAutoLayout;
 			sourceTree = "<group>";
 		};
@@ -511,7 +510,6 @@
 				4466801DA2747F42441B055F3A1980BC /* Util */,
 				6F041CB8D11EA463C45AFA713FC443C8 /* ZipArchive */,
 			);
-			name = FDFoundation;
 			path = FDFoundation;
 			sourceTree = "<group>";
 		};
@@ -639,14 +637,23 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
+				TargetAttributes = {
+					20D7615AB43C21F265D10CF1FD2AD6B2 = {
+						LastSwiftMigration = 1020;
+					};
+					DCB14A7F5E4271C195A15C18D9D741B1 = {
+						LastSwiftMigration = 1020;
+					};
+				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 10B570CF2F2510E3F7C2C9AE0C7B9C61 /* Products */;
@@ -798,6 +805,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -875,18 +883,14 @@
 				INFOPLIST_FILE = "Target Support Files/SweetAutoLayout/SweetAutoLayout-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SweetAutoLayout/SweetAutoLayout.modulemap";
 				PRODUCT_MODULE_NAME = SweetAutoLayout;
 				PRODUCT_NAME = SweetAutoLayout;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -910,18 +914,14 @@
 				INFOPLIST_FILE = "Target Support Files/FDFoundation/FDFoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/FDFoundation/FDFoundation.modulemap";
 				PRODUCT_MODULE_NAME = FDFoundation;
 				PRODUCT_NAME = FDFoundation;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -946,18 +946,14 @@
 				INFOPLIST_FILE = "Target Support Files/FDFoundation/FDFoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/FDFoundation/FDFoundation.modulemap";
 				PRODUCT_MODULE_NAME = FDFoundation;
 				PRODUCT_NAME = FDFoundation;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -968,6 +964,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1017,8 +1014,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -1041,11 +1037,7 @@
 				INFOPLIST_FILE = "Target Support Files/Pods-FDPhotoAlbum/Pods-FDPhotoAlbum-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-FDPhotoAlbum/Pods-FDPhotoAlbum.modulemap";
 				OTHER_LDFLAGS = "";
@@ -1078,11 +1070,7 @@
 				INFOPLIST_FILE = "Target Support Files/Pods-FDPhotoAlbum/Pods-FDPhotoAlbum-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-FDPhotoAlbum/Pods-FDPhotoAlbum.modulemap";
 				OTHER_LDFLAGS = "";
@@ -1116,18 +1104,14 @@
 				INFOPLIST_FILE = "Target Support Files/SweetAutoLayout/SweetAutoLayout-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SweetAutoLayout/SweetAutoLayout.modulemap";
 				PRODUCT_MODULE_NAME = SweetAutoLayout;
 				PRODUCT_NAME = SweetAutoLayout;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
