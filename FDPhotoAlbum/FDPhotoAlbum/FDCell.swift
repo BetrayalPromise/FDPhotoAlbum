@@ -90,6 +90,8 @@ class FDAssetCell: UICollectionViewCell {
     private var showImageView: UIImageView?
     /// 选择按钮
     private var selectButton: UIButton?
+    /// 按钮选择背景图
+    private var selectImageView: UIImageView?
     /// 数量标签
     private var countLabel: UILabel?
     
@@ -119,14 +121,17 @@ class FDAssetCell: UICollectionViewCell {
         showImageView.translatesAutoresizingMaskIntoConstraints = false
         showImageView.contentMode = .scaleAspectFill
         
-        let selectButton: UIButton = UIButton.init(frame: .zero)
+        let selectButton: UIButton = UIButton(frame: .zero)
         self.contentView.addSubview(selectButton)
         self.selectButton = selectButton
         selectButton.translatesAutoresizingMaskIntoConstraints = false
         selectButton.addTarget(self, action: #selector(handle(button:)), for: UIControl.Event.touchUpInside)
-        selectButton.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
-        selectButton.layer.cornerRadius = 10
-        selectButton.layer.masksToBounds = true
+        
+        let selectImageView = UIImageView(frame: .zero)
+        self.contentView.addSubview(selectImageView)
+        self.selectImageView = selectImageView
+        selectImageView.translatesAutoresizingMaskIntoConstraints = false
+        selectImageView.image = UIImage(named: "Ablum.bundle/icon_normal")
         
         let countLabel: UILabel = UILabel(frame: .zero)
         self.contentView.addSubview(countLabel)
@@ -167,10 +172,15 @@ class FDAssetCell: UICollectionViewCell {
         (showImageView.bottom == self.contentView.bottom).isActive = true
         (showImageView.right == self.contentView.right).isActive = true
         
-        (selectButton.top == self.contentView.top + 5).isActive = true
-        (selectButton.right == self.contentView.right - 5).isActive = true
-        (selectButton.width == 20).isActive = true
-        (selectButton.height == 20).isActive = true
+        (selectButton.top == self.contentView.top).isActive = true
+        (selectButton.right == self.contentView.right).isActive = true
+        (selectButton.width == 30).isActive = true
+        (selectButton.height == 30).isActive = true
+        
+        (selectImageView.centerX == selectButton.centerX).isActive = true
+        (selectImageView.centerY == selectButton.centerY).isActive = true
+        (selectImageView.height == 20).isActive = true
+        (selectImageView.width == 20).isActive = true
         
         (countLabel.centerX == selectButton.centerX).isActive = true
         (countLabel.centerY == selectButton.centerY).isActive = true
@@ -209,10 +219,10 @@ class FDAssetCell: UICollectionViewCell {
             self.videoTimeLabel?.isHidden = false
         }
         if self.model?.isSelected ?? false {
-            self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_selected"), for: .normal)
+            self.selectImageView?.image = UIImage(named: "Ablum.bundle/icon_selected")
             self.countLabel?.text = "\(self.model?.selectedCount ?? 0)"
         } else {
-            self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
+            self.selectImageView?.image = UIImage(named: "Ablum.bundle/icon_normal")
             self.countLabel?.text = nil
         }
         let option: PHImageRequestOptions = PHImageRequestOptions()
@@ -247,14 +257,24 @@ class FDAssetCell: UICollectionViewCell {
     @objc
     func handle(button: UIButton) {
         self.delegate?.select(by: self, with: self.model)
+        if self.model?.isSelected == true {
+//            let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+//            animation.fillMode = .forwards
+//            animation.isRemovedOnCompletion = false
+//            animation.duration = 3.0
+//            animation.values = [0.6, 0.8, 1.0, 1.2, 1.0, 0.9, 1.0]
+//            animation.calculationMode = .linear
+//            self.selectButton?.layer.add(animation, forKey: "animation")
+            UIView.showAnimation(with: self.selectImageView?.layer ?? CALayer())
+        }
     }
     
     func updateStatus() {
         if self.model?.isSelected ?? false {
-            self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_selected"), for: .normal)
+            self.selectImageView?.image = UIImage(named: "Ablum.bundle/icon_selected")
             self.countLabel?.text = "\(self.model?.selectedCount ?? 0)"
         } else {
-            self.selectButton?.setBackgroundImage(UIImage(named: "Ablum.bundle/icon_normal"), for: .normal)
+            self.selectImageView?.image = UIImage(named: "Ablum.bundle/icon_normal")
             self.countLabel?.text = nil
         }
         let types: [PHAssetMediaType] = self.delegate?.supportSelectTypes() ?? [.image, .video, .audio, .unknown]
@@ -273,5 +293,19 @@ class FDAssetCell: UICollectionViewCell {
                 }
             }
         }
+    }
+}
+
+extension UIView {
+    class func showAnimation(with layer: CALayer) {
+        let animationStart = NSNumber(value: 1.15)
+        let animationStop = NSNumber(value: 0.92)
+        
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        animation.duration = 0.15
+        animation.fromValue = animationStart
+        animation.toValue = animationStop
+        animation.autoreverses = true
+        layer.add(animation, forKey: "scale-layer")
     }
 }
