@@ -65,8 +65,10 @@ class FDCollectionController: UIViewController {
     /// 获取数据
     private func getDatas() {
         // TODO: 添加loading处理
-        DataSource.getAlbums { (models) in
-            guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
+        /// 类型支持过滤
+        guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
+        let supports: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
+        DataSource.getAlbums(supports: supports) { (models) in
             if controller.imagePickerDelegate?.imagePickerFilerEmptyCollection() ?? true {
                 self.list = models.filter({ (m) -> Bool in
                     if m.result?.count ?? 0 > 0 {
@@ -78,11 +80,11 @@ class FDCollectionController: UIViewController {
             } else {
                 self.list = models
             }
-            let supportTypes: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
-            let unsupportTypes: [String] = controller.imagePickerDelegate?.imagePickerUnSupportTypes() ?? []
+            let unsupports: [String] = controller.imagePickerDelegate?.imagePickerUnSupportTypes() ?? []
             self.list?.forEach({ (model) in
                 model.models = model.models?.filter({ (m) -> Bool in
-                    if supportTypes.contains(m.asset?.mediaType ?? .unknown) && !unsupportTypes.contains(m.suffix ?? "") {
+                    /// 后缀过滤
+                    if !unsupports.contains(m.suffix ?? "") {
                         return true
                     }
                     return false
@@ -92,14 +94,9 @@ class FDCollectionController: UIViewController {
             repeat {
                 loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
             } while (self.layoutFlag == false)
-            if pthread_main_np() != 0 {
-                 // TODO: 取消loading处理
+            DispatchQueue.main.async {
+                // TODO: 取消loading处理
                 self.collection?.reloadData()
-            } else {
-                DispatchQueue.main.async {
-                    // TODO: 取消loading处理
-                    self.collection?.reloadData()
-                }
             }
         }
     }
