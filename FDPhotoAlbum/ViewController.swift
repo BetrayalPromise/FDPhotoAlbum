@@ -21,19 +21,18 @@ class ViewController: UIViewController {
     
     @objc
     func handle(button: UIButton) {
-        let controller = FDImagePickerController(isAppearAsset: true)
-        controller.imagePickerDelegate = self
-        self.present(controller, animated: true, completion: nil)
+        FDPhotoAlbum.default.delegate = self
+        FDPhotoAlbum.default.showAlbum(with: self)
     }
 }
 
-extension ViewController: FDImagePickerControllerDelegate {
-    func imagePickerFilerEmptyCollection() -> Bool {
-        return true
+extension ViewController: FDPhotoAlbumDelegate {
+    func abumFilerEmptyCollection() -> Bool {
+        return false
     }
     
-    func imagePickerSelectMaxVideoCount() -> Int {
-        return 2
+    func abumSelectMaxVideoCount() -> Int {
+        return 1
     }
 }
 

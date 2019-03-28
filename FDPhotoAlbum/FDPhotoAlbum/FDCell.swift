@@ -65,12 +65,18 @@ class FDCollectionCell: UICollectionViewCell {
         didSet {
             self.nameLabel?.text = model?.name
             self.totalLabel?.text = "\(model?.result?.count ?? 0)"
-            guard let count = self.model?.result?.count, let asset: PHAsset = self.model?.result?.object(at: count - 1) else { return }
-            let option = PHImageRequestOptions()
-            option.isSynchronous = true
-            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
-                guard let `self` = self else { return }
-                self.showImageView?.image = image
+            guard let count = self.model?.result?.count else { return }
+            if count == 0 {
+                /// TODO: 加入占位图片
+                self.showImageView?.image = UIImage()
+            } else {
+                guard let asset: PHAsset = self.model?.result?.object(at: count == 0 ? 0 : count - 1) else { return }
+                let option = PHImageRequestOptions()
+                option.isSynchronous = true
+                PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
+                    guard let `self` = self else { return }
+                    self.showImageView?.image = image
+                }
             }
         }
     }

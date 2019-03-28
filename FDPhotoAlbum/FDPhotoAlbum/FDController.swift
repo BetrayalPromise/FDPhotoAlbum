@@ -66,10 +66,9 @@ class FDCollectionController: UIViewController {
     private func getDatas() {
         // TODO: 添加loading处理
         /// 类型支持过滤
-        guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
-        let supports: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
+        let supports: [PHAssetMediaType] = FDPhotoAlbum.default.delegate?.abumSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
         DataSource.getAlbums(supports: supports) { (models) in
-            if controller.imagePickerDelegate?.imagePickerFilerEmptyCollection() ?? true {
+            if FDPhotoAlbum.default.delegate?.abumFilerEmptyCollection() ?? true {
                 self.list = models.filter({ (m) -> Bool in
                     if m.result?.count ?? 0 > 0 {
                         return true
@@ -80,7 +79,7 @@ class FDCollectionController: UIViewController {
             } else {
                 self.list = models
             }
-            let unsupports: [String] = controller.imagePickerDelegate?.imagePickerUnSupportTypes() ?? []
+            let unsupports: [String] = FDPhotoAlbum.default.delegate?.abumUnSupportTypes() ?? []
             self.list?.forEach({ (model) in
                 model.models = model.models?.filter({ (m) -> Bool in
                     /// 后缀过滤
@@ -413,14 +412,13 @@ extension FDAssetController: UICollectionViewDelegateFlowLayout {
 
 extension FDAssetController: FDAssetCellSelectProtocal {
     func selectReachMax() -> Bool {
-        guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return false }
         var value = 0
         for m in models ?? [] {
             if m.isSelected {
                 value += 1
             }
         }
-        if controller.imagePickerDelegate?.imagePickerMaxSelectedCount() ?? 9 <= value {
+        if FDPhotoAlbum.default.delegate?.abumMaxSelectedCount() ?? 9 <= value {
             return true
         } else {
             return false
@@ -429,7 +427,6 @@ extension FDAssetController: FDAssetCellSelectProtocal {
     
     func select(by cell: FDAssetCell, with model: FDAssetModel?) {
         guard let `model` = model else { return }
-        guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
         if model.isSelected == true {
             /// 取消
             let deleteValue: Int = model.selectedCount
@@ -449,12 +446,12 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                 }
             }
             self.updateBottomBar(value: value)
-            controller.imagePickerDelegate?.imagePicker(controller, changedSelectedModel: model)
+            FDPhotoAlbum.default.delegate?.abum(didChangedModel: model)
             for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
                 c.updateStatus()
             }
         } else {
-            let types: [PHAssetMediaType] = controller.imagePickerDelegate?.imagePickerSupportSelectAssetMediaTypes() ?? [.audio, .image, .video, .video]
+            let types: [PHAssetMediaType] = FDPhotoAlbum.default.delegate?.abumSupportSelectAssetMediaTypes() ?? [.audio, .image, .video, .video]
             if !types.contains(model.asset?.mediaType ?? .unknown) {
                 debugPrint("不支持的选择类型")
                 return
@@ -467,9 +464,9 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                     value += 1
                 }
             }
-            if controller.imagePickerDelegate?.imagePickerMaxSelectedCount() ?? 9 == value + 1 {
+            if FDPhotoAlbum.default.delegate?.abumMaxSelectedCount() ?? 9 == value + 1 {
                 debugPrint("达到最大值")
-            } else if (controller.imagePickerDelegate?.imagePickerMaxSelectedCount() ?? 9 <= value) {
+            } else if (FDPhotoAlbum.default.delegate?.abumMaxSelectedCount() ?? 9 <= value) {
                 debugPrint("超过最大值")
                 return
             } else {
@@ -480,7 +477,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                             imageValue += 1
                         }
                     }
-                    let imageMax: Int = controller.imagePickerDelegate?.imagePickerSelectMaxImageCount() ?? 9
+                    let imageMax: Int = FDPhotoAlbum.default.delegate?.abumSelectMaxImageCount() ?? 9
                     if imageValue + 1 > imageMax {
                         debugPrint("image 超过上限")
                         return
@@ -493,7 +490,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
                             videoValue += 1
                         }
                     }
-                    let videoMax: Int = controller.imagePickerDelegate?.imagePickerSelectMaxVideoCount() ?? 9
+                    let videoMax: Int = FDPhotoAlbum.default.delegate?.abumSelectMaxVideoCount() ?? 9
                     if videoValue + 1 > videoMax {
                         debugPrint("video 超过上限")
                         return
@@ -503,7 +500,7 @@ extension FDAssetController: FDAssetCellSelectProtocal {
             model.isSelected = true
             model.selectedCount = value + 1
             self.updateBottomBar(value: value + 1)
-            controller.imagePickerDelegate?.imagePicker(controller, changedSelectedModel: model)
+            FDPhotoAlbum.default.delegate?.abum(didChangedModel: model)
             for c in self.collection?.visibleCells as? [FDAssetCell] ?? [] {
                 c.updateStatus()
             }
@@ -511,9 +508,6 @@ extension FDAssetController: FDAssetCellSelectProtocal {
     }
     
     func supportSelectTypes() -> [PHAssetMediaType] {
-        guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else {
-            return [.image, .video, .audio, .unknown]
-        }
-        return controller.imagePickerDelegate?.imagePickerSupportSelectAssetMediaTypes() ?? [.image, .video, .audio, .unknown]
+        return FDPhotoAlbum.default.delegate?.abumSupportSelectAssetMediaTypes() ?? [.image, .video, .audio, .unknown]
     }
 }
