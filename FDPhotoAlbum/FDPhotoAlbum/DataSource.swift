@@ -3,7 +3,31 @@ import Photos
 
 class DataSource: NSObject {
     /// 获取所有的
-    public class func getAlbums( complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
+//    public class func getAlbums( complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
+//        let myPhotoStream = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumMyPhotoStream, options: nil)
+//        let smartAlbum = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
+//        let topLevelUserCollections = PHCollectionList.fetchTopLevelUserCollections(with: nil)
+//        let albumSyncedAlbum = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumSyncedAlbum, options: nil)
+//        let albumCloudShared = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumCloudShared, options: nil)
+//        let allAlbums = [myPhotoStream, smartAlbum, topLevelUserCollections, albumSyncedAlbum, albumCloudShared]
+//        let option: PHFetchOptions = PHFetchOptions()
+//        option.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d || mediaType = %d || mediaType = %d", PHAssetMediaType.unknown.rawValue, PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue, PHAssetMediaType.audio.rawValue)
+//        var datas: [FDAlbumModel] = []
+//        for album in allAlbums {
+//            if !album.isKind(of: PHFetchResult<PHAssetCollection>.classForCoder()) { continue }
+//            (album as? PHFetchResult<PHAssetCollection>)?.enumerateObjects({ (collection, index, stop) in
+//                let fetchs: PHFetchResult<PHAsset> = PHAsset.fetchAssets(in: collection, options: option)
+//                if collection.assetCollectionSubtype == .smartAlbumUserLibrary {
+//                    datas.insert(self.albumModel(result: fetchs, name: collection.localizedTitle, isCameraRoll: true), at: 0)
+//                } else {
+//                    datas.append(self.albumModel(result: fetchs, name: collection.localizedTitle, isCameraRoll: false))
+//                }
+//            })
+//        }
+//        complete(datas)
+//    }
+    
+    public class func getAlbums(supports: [PHAssetMediaType] = [.unknown, .image, .video, .audio], complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
         let myPhotoStream = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumMyPhotoStream, options: nil)
         let smartAlbum = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
         let topLevelUserCollections = PHCollectionList.fetchTopLevelUserCollections(with: nil)
@@ -11,7 +35,22 @@ class DataSource: NSObject {
         let albumCloudShared = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumCloudShared, options: nil)
         let allAlbums = [myPhotoStream, smartAlbum, topLevelUserCollections, albumSyncedAlbum, albumCloudShared]
         let option: PHFetchOptions = PHFetchOptions()
-        option.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d || mediaType = %d || mediaType = %d", PHAssetMediaType.unknown.rawValue, PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue, PHAssetMediaType.audio.rawValue)
+        switch supports.count {
+        case 0: break
+        case 1:
+            option.predicate = NSPredicate(format: "mediaType = %d", supports[0].rawValue)
+            break
+        case 2:
+            option.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d", supports[0].rawValue, supports[1].rawValue)
+            break
+        case 3:
+            option.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d || mediaType = %d", supports[0].rawValue, supports[1].rawValue, supports[2].rawValue)
+            break
+        case 4:
+            option.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d || mediaType = %d || mediaType = %d", supports[0].rawValue, supports[1].rawValue, supports[2].rawValue, supports[3].rawValue)
+            break
+        default: break
+        }
         var datas: [FDAlbumModel] = []
         for album in allAlbums {
             if !album.isKind(of: PHFetchResult<PHAssetCollection>.classForCoder()) { continue }
