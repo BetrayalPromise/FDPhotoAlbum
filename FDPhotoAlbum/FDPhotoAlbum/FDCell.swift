@@ -92,6 +92,8 @@ class FDAssetCell: UICollectionViewCell {
     private var selectButton: UIButton?
     /// 数量标签
     private var countLabel: UILabel?
+    
+    private var videoCoverImageView: UIImageView?
     /// 视频图标
     private var videoImageView: UIImageView?
     /// 视频时长标签
@@ -133,6 +135,12 @@ class FDAssetCell: UICollectionViewCell {
         countLabel.font = UIFont.systemFont(ofSize: 12)
         countLabel.textColor = .white
         
+        let videoCoverImageView: UIImageView = UIImageView(frame: .zero)
+        self.contentView.addSubview(videoCoverImageView)
+        self.videoCoverImageView = videoCoverImageView
+        videoCoverImageView.translatesAutoresizingMaskIntoConstraints = false
+        videoCoverImageView.image = UIImage(named: "Ablum.bundle/icon_mask")
+        
         let videoImageView: UIImageView = UIImageView(frame: .zero)
         self.contentView.addSubview(videoImageView)
         self.videoImageView = videoImageView
@@ -167,6 +175,11 @@ class FDAssetCell: UICollectionViewCell {
         (countLabel.centerX == selectButton.centerX).isActive = true
         (countLabel.centerY == selectButton.centerY).isActive = true
         
+        (videoCoverImageView.left == self.contentView.left).isActive = true
+        (videoCoverImageView.bottom == self.contentView.bottom).isActive = true
+        (videoCoverImageView.right == self.contentView.right).isActive = true
+        (videoCoverImageView.height == 30).isActive = true
+        
         (videoImageView.left == self.contentView.left + 9).isActive = true
         (videoImageView.bottom == self.contentView.bottom - 8).isActive = true
         (videoImageView.width == 12).isActive = true
@@ -187,9 +200,11 @@ class FDAssetCell: UICollectionViewCell {
         self.videoTimeLabel?.text = model?.duration
         
         if model?.asset?.mediaType != .video {
+            self.videoCoverImageView?.isHidden = true
             self.videoImageView?.isHidden = true
             self.videoTimeLabel?.isHidden = true
         } else {
+            self.videoCoverImageView?.isHidden = false
             self.videoImageView?.isHidden = false
             self.videoTimeLabel?.isHidden = false
         }

@@ -81,9 +81,9 @@ extension FDImagePickerControllerDelegate {
 open class FDImagePickerController: UINavigationController {
     public weak var imagePickerDelegate: FDImagePickerControllerDelegate? {
         set {
-            FDAlbum.default.delegate = newValue
+            FDAlbumStore.default.delegate = newValue
         } get {
-            return FDAlbum.default.delegate
+            return FDAlbumStore.default.delegate
         }
     }
     
@@ -104,7 +104,7 @@ open class FDImagePickerController: UINavigationController {
     }
 
     deinit {
-        FDAlbum.default.delegate = nil
+        FDAlbumStore.default.delegate = nil
     }
 
 }

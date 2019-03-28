@@ -1,6 +1,6 @@
 import Foundation
 
-class FDAlbum: NSObject {
+class FDAlbumStore: NSObject {
     weak var delegate: FDImagePickerControllerDelegate?
-    static let `default`: FDAlbum = FDAlbum()
+    static let `default`: FDAlbumStore = FDAlbumStore()
 }
