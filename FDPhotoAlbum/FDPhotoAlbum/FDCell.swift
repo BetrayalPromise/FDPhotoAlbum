@@ -72,7 +72,7 @@ class FDCollectionCell: UICollectionViewCell {
             } else {
                 guard let asset: PHAsset = self.model?.result?.object(at: count == 0 ? 0 : count - 1) else { return }
                 let option = PHImageRequestOptions()
-                option.isSynchronous = true
+//                option.isSynchronous = true
                 PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
                     guard let `self` = self else { return }
                     self.showImageView?.image = image
@@ -229,7 +229,7 @@ class FDAssetCell: UICollectionViewCell {
             self.countLabel?.text = nil
         }
         let option: PHImageRequestOptions = PHImageRequestOptions()
-        option.isSynchronous = true
+//        option.isSynchronous = true
         option.resizeMode = .fast
         PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
             guard let `self` = self else { return }

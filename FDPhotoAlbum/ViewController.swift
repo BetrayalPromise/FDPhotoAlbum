@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 
 extension ViewController: FDPhotoAlbumDelegate {
     func albumFilerEmptyCollection() -> Bool {
-        return false
+        return true
     }
     
     func albumSelectMaxVideoCount() -> Int {
