@@ -64,10 +64,8 @@ class FDCollectionCell: UICollectionViewCell {
     var model: FDAlbumModel? {
         didSet {
             self.nameLabel?.text = model?.name
-            self.totalLabel?.text = "\(model?.models?.count ?? 0)"
-            guard let asset = model?.models?.last?.asset else {
-                return
-            }
+            self.totalLabel?.text = "\(model?.result?.count ?? 0)"
+            guard let count = self.model?.result?.count, let asset: PHAsset = self.model?.result?.object(at: count - 1) else { return }
             let option = PHImageRequestOptions()
             option.isSynchronous = true
             PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: self.frame.width, height: self.frame.width), contentMode: PHImageContentMode.aspectFill, options: option) { [weak self] (image, info) in
@@ -76,7 +74,6 @@ class FDCollectionCell: UICollectionViewCell {
             }
         }
     }
-    
 }
 
 protocol FDAssetCellSelectProtocal: class {

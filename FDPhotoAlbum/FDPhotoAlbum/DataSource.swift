@@ -2,7 +2,8 @@ import Foundation
 import Photos
 
 class DataSource: NSObject {
-    public class func getAlbums(complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
+    /// 获取所有的
+    public class func getAlbums( complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
         let myPhotoStream = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumMyPhotoStream, options: nil)
         let smartAlbum = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
         let topLevelUserCollections = PHCollectionList.fetchTopLevelUserCollections(with: nil)
@@ -10,6 +11,7 @@ class DataSource: NSObject {
         let albumCloudShared = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumCloudShared, options: nil)
         let allAlbums = [myPhotoStream, smartAlbum, topLevelUserCollections, albumSyncedAlbum, albumCloudShared]
         let option: PHFetchOptions = PHFetchOptions()
+        option.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d || mediaType = %d || mediaType = %d", PHAssetMediaType.unknown.rawValue, PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue, PHAssetMediaType.audio.rawValue)
         var datas: [FDAlbumModel] = []
         for album in allAlbums {
             if !album.isKind(of: PHFetchResult<PHAssetCollection>.classForCoder()) { continue }

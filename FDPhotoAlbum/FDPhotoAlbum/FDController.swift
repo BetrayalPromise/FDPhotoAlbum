@@ -69,7 +69,7 @@ class FDCollectionController: UIViewController {
             guard let controller: FDImagePickerController = self.navigationController as? FDImagePickerController else { return }
             if controller.imagePickerDelegate?.imagePickerFilerEmptyCollection() ?? true {
                 self.list = models.filter({ (m) -> Bool in
-                    if m.models?.count ?? 0 > 0 {
+                    if m.result?.count ?? 0 > 0 {
                         return true
                     } else {
                         return false
@@ -196,7 +196,7 @@ extension FDCollectionController: UICollectionViewDelegateFlowLayout {
 
 extension FDCollectionController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let controller = FDAssetController(models: self.list?[indexPath.row].models)
+        let controller = FDAssetController(model: self.list?[indexPath.row])
         controller.title = self.list?[indexPath.row].name
         controller.selectedModels = { models in
             
@@ -227,10 +227,24 @@ class FDAssetController: UIViewController {
     var confirmButton: UIButton?
     weak var ownNavigationController: UINavigationController?
     var selectedModels: (([FDAssetModel]) -> Void)?
-    
-    convenience init(models: [FDAssetModel]?) {
+    var layoutFlag = false
+    convenience init(model: FDAlbumModel?) {
         self.init()
-        self.models = models
+        guard let result = model?.result else { return }
+        if model?.models == nil {
+            Thread {
+                DataSource.getAssets(from: result) { (models) in
+                    self.models = models
+                }
+                let loop = RunLoop.current
+                repeat {
+                    loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
+                } while (self.layoutFlag == false)
+                DispatchQueue.main.async {
+                    self.collection?.reloadData()
+                }
+            }.start()
+        }
     }
     
     override func viewDidLoad() {
@@ -315,6 +329,7 @@ class FDAssetController: UIViewController {
         } else {
             (confirmButton.right == self.view.right - 26).isActive = true
         }
+        self.layoutFlag = true
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

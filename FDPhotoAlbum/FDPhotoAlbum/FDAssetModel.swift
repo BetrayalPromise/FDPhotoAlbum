@@ -8,13 +8,7 @@ public class FDAlbumModel: NSObject {
     /// 集合内容数量
     public var models: [FDAssetModel]?
     public var isCameraRoll: Bool?
-    var result: PHFetchResult<PHAsset>? {
-        didSet {
-            DataSource.getAssets(from: result ?? PHFetchResult<PHAsset>()) { (ms) in
-                self.models = ms
-            }
-        }
-    }
+    var result: PHFetchResult<PHAsset>?
 }
 
 /// PHAsset抽象
