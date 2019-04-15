@@ -36,7 +36,10 @@ public class FDAssetModel: NSObject {
             let option: PHVideoRequestOptions = PHVideoRequestOptions()
             option.isNetworkAccessAllowed = true
             PHImageManager.default().requestAVAsset(forVideo: asset, options: option) { (avasset, avaudioMix, info) in
-                
+                if avasset?.isKind(of: AVURLAsset.classForCoder()) ?? false {
+                    let values = try? (avasset as? AVURLAsset)?.url.resourceValues(forKeys: Set<URLResourceKey>(arrayLiteral: .fileSizeKey))
+                    print(values)
+                }
             }
         }
     }

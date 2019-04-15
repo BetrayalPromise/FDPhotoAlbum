@@ -35,14 +35,22 @@ class FDCollectionController: UIViewController {
     convenience init(isAppearAsset: Bool) {
         self.init()
         self.isAppearAsset = isAppearAsset
-        self.datasForUserInterface()
+        self.decisieForUserInterface()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !self.layoutFlag {
+            self.buildUserInterface()
+        } else {
+            self.collection?.reloadSections(IndexSet(integer: IndexSet.Element(0)))
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "相册"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Ablum.bundle/icon_back"), style: .done, target: self, action: #selector(handle(barButtonItem:)))
-       self.buildUserInterface()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -50,7 +58,7 @@ class FDCollectionController: UIViewController {
         self.collection?.reloadData()
     }
     
-    func datasForUserInterface() {
+    func decisieForUserInterface() {
         Thread {
             let currentStatus = PHPhotoLibrary.authorizationStatus()
             switch currentStatus {
@@ -89,7 +97,7 @@ class FDCollectionController: UIViewController {
         // TODO: 添加loading处理
         /// 类型支持过滤
         let supports: [PHAssetMediaType] = FDPhotoAlbum.default.delegate?.albumSupportAssetMediaTypes() ?? [.video, .image, .audio, .unknown]
-        DataSource.getAlbums(supports: supports) { (models) in
+        FDDataSource.getAlbums(supports: supports) { (models) in
             if FDPhotoAlbum.default.delegate?.albumFilerEmptyCollection() ?? true {
                 self.list = models.filter({ (m) -> Bool in
                     if m.result?.count ?? 0 > 0 {
@@ -116,8 +124,16 @@ class FDCollectionController: UIViewController {
                 loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
             } while (self.layoutFlag == false)
             DispatchQueue.main.async {
-                // TODO: 取消loading处理
-                self.collection?.reloadData()
+                if self.isAppearAsset ?? true {
+                    let controller = FDAssetController(model: self.list?[0])
+                    controller.title = self.list?[0].name
+                    controller.selectedModels = { models in
+                        
+                    }
+                    self.navigationController?.pushViewController(controller, animated: true)
+                } else {
+                    self.collection?.reloadData()
+                }
             }
         }
     }
@@ -191,6 +207,10 @@ class FDCollectionController: UIViewController {
         }
         self.layoutFlag = true
     }
+    
+    deinit {
+        print("\(self.classForCoder) deinit")
+    }
 }
 
 
@@ -251,7 +271,7 @@ class FDAssetController: UIViewController {
         guard let result = model?.result else { return }
         if model?.models == nil {
             Thread {
-                DataSource.getAssets(from: result) { (models) in
+                FDDataSource.getAssets(from: result) { (models) in
                     self.models = models
                 }
                 let loop = RunLoop.current
@@ -291,6 +311,7 @@ class FDAssetController: UIViewController {
         
         let bottomView: UIView = UIView(frame: .zero)
         self.view.addSubview(bottomView)
+        bottomView.clipsToBounds = true
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         let previewButton: UIButton = UIButton(frame: .zero)
         self.view.addSubview(previewButton)
@@ -299,7 +320,6 @@ class FDAssetController: UIViewController {
         previewButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         previewButton.setTitle("预览", for: .normal)
         previewButton.setTitleColor(UIColor(fd_hexString: "#CDCED4"), for: .normal)
-        
         let confirmButton: UIButton = UIButton(frame: .zero)
         self.view.addSubview(confirmButton)
         self.confirmButton = confirmButton
@@ -310,42 +330,61 @@ class FDAssetController: UIViewController {
         confirmButton.setTitle("确定", for: .normal)
         confirmButton.setTitleColor(UIColor.white, for: .normal)
         confirmButton.backgroundColor = UIColor(fd_hexString: "#CDCED4")
+        confirmButton.addTarget(self, action: #selector(handle(button:)), for: UIControl.Event.touchUpInside)
+        
+        let effect: AlbumEffect = FDPhotoAlbum.default.delegate?.albumEffect() ?? .normal
         
         if #available(iOS 11.0, *) {
             (collection.top == self.view.safeAreaLayoutGuide.top).isActive = true
             (collection.left == self.view.safeAreaLayoutGuide.left).isActive = true
-            (collection.bottom == self.view.safeAreaLayoutGuide.bottom - 75).isActive = true
+            if effect == .normal {
+                (collection.bottom == self.view.safeAreaLayoutGuide.bottom - 75).isActive = true
+            } else {
+                (collection.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
+            }
             (collection.right == self.view.safeAreaLayoutGuide.right).isActive = true
         } else {
             (collection.top == self.topLayoutGuide.bottom).isActive = true
             (collection.left == self.view.left).isActive = true
-            (collection.bottom == self.bottomLayoutGuide.top - 75).isActive = true
+            if effect == .normal {
+                (collection.bottom == self.bottomLayoutGuide.top - 75).isActive = true
+            } else {
+                (collection.bottom == self.bottomLayoutGuide.top).isActive = true
+            }
             (collection.right == self.view.right).isActive = true
         }
         
-        (bottomView.top == collection.bottom).isActive = true
-        (bottomView.left == self.view.left).isActive = true
-        (bottomView.right == self.view.right).isActive = true
-        if #available(iOS 11.0, *) {
-            (bottomView.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
+        if effect == .normal {
+            (bottomView.top == collection.bottom).isActive = true
+            (bottomView.left == self.view.left).isActive = true
+            (bottomView.right == self.view.right).isActive = true
+            if #available(iOS 11.0, *) {
+                (bottomView.bottom == self.view.safeAreaLayoutGuide.bottom).isActive = true
+            } else {
+                (bottomView.bottom == self.bottomLayoutGuide.top).isActive = true
+            }
+            
+            (previewButton.centerY == bottomView.centerY).isActive = true
+            if #available(iOS 11.0, *) {
+                (previewButton.left == self.view.safeAreaLayoutGuide.left + 26).isActive = true
+            } else {
+                (previewButton.left == self.view.left + 26).isActive = true
+            }
+            
+            (confirmButton.centerY == bottomView.centerY).isActive = true
+            (confirmButton.width == 145).isActive = true
+            (confirmButton.height == 45).isActive = true
+            if #available(iOS 11.0, *) {
+                (confirmButton.right == self.view.safeAreaLayoutGuide.right - 26).isActive = true
+            } else {
+                (confirmButton.right == self.view.right - 26).isActive = true
+            }
         } else {
-            (bottomView.bottom == self.bottomLayoutGuide.top).isActive = true
-        }
-        
-        (previewButton.centerY == bottomView.centerY).isActive = true
-        if #available(iOS 11.0, *) {
-            (previewButton.left == self.view.safeAreaLayoutGuide.left + 26).isActive = true
-        } else {
-            (previewButton.left == self.view.left + 26).isActive = true
-        }
-        
-        (confirmButton.centerY == bottomView.centerY).isActive = true
-        (confirmButton.width == 145).isActive = true
-        (confirmButton.height == 45).isActive = true
-        if #available(iOS 11.0, *) {
-            (confirmButton.right == self.view.safeAreaLayoutGuide.right - 26).isActive = true
-        } else {
-            (confirmButton.right == self.view.right - 26).isActive = true
+            previewButton.removeFromSuperview()
+            self.previewButton = nil
+            confirmButton.removeFromSuperview()
+            self.confirmButton = nil
+            bottomView.removeFromSuperview()
         }
         self.layoutFlag = true
     }
@@ -365,6 +404,14 @@ class FDAssetController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc
+    func handle(button: UIButton) {
+        let models = self.models?.filter({ (m) -> Bool in
+            m.isSelected ? true : false
+        })
+        FDPhotoAlbum.default.delegate?.albumFinish(selectedModels: models ?? [])
+    }
+    
     func updateBottomBar(value: Int) {
         if value > 0 {
             self.previewButton?.setTitleColor(UIColor.init(fd_hexString: "#333333"), for: .normal)
@@ -382,6 +429,7 @@ class FDAssetController: UIViewController {
     }
     
     deinit {
+        print("\(self.classForCoder) deinit")
         self.models?.forEach({ (m) in
             m.isSelected = false
             m.selectedCount = 0
@@ -395,7 +443,25 @@ extension FDAssetController: UIGestureRecognizerDelegate {
 
 extension FDAssetController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let effect: AlbumEffect = FDPhotoAlbum.default.delegate?.albumEffect() ?? .normal
+        if effect == .normal {
+            let models = self.models?.filter({ (m) -> Bool in
+                m.isSelected ? true : false
+            })
+            self.dismiss(animated: true) {
+                FDPhotoAlbum.default.delegate?.albumFinish(selectedModels: models ?? [])
+            }
+        } else {
+            guard let model: FDAssetModel = self.models?[indexPath.row] else {
+                self.dismiss(animated: true) {
+                    FDPhotoAlbum.default.delegate?.albumFinish(selectedModels: [])
+                }
+                return
+            }
+            self.dismiss(animated: true) {
+                FDPhotoAlbum.default.delegate?.albumFinish(selectedModels: [model])
+            }
+        }
     }
 }
 

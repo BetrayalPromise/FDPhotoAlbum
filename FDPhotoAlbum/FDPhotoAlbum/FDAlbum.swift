@@ -38,6 +38,18 @@ public protocol FDPhotoAlbumDelegate: class {
     // TODO: 处理资源大小控制
     /// 资源大小控制 单位Byte
     func albumMaxVolume() -> Double
+    
+    /// 控制是常规选择还是扫码选择
+    func albumEffect() -> AlbumEffect
+    
+    /// 完成回调
+    func albumFinish(selectedModels: [FDAssetModel])
+}
+
+/// 选择效果 normal 常规相册选择 scan 扫码选择
+public enum AlbumEffect {
+    case normal
+    case scan
 }
 
 extension FDPhotoAlbumDelegate {
@@ -75,12 +87,18 @@ extension FDPhotoAlbumDelegate {
     func albumMaxVolume() -> Double {
         return 20971520
     }
+    
+    func albumEffect() -> AlbumEffect {
+        return AlbumEffect.normal
+    }
+    
+    func albumFinish(selectedModels: [FDAssetModel]) {}
 }
 
 public class FDPhotoAlbum: NSObject {
     weak var delegate: FDPhotoAlbumDelegate?
     static let `default`: FDPhotoAlbum = FDPhotoAlbum()
-    func showAlbum(with controller: UIViewController) {
+    public func showAlbum(with controller: UIViewController) {
         let picker = FDImagePickerController(isAppearAsset: true)
         controller.present(picker, animated: true, completion: nil)
     }

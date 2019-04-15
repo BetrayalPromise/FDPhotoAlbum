@@ -1,7 +1,8 @@
 import Foundation
 import Photos
 
-class DataSource: NSObject {
+/// 负责相册数据的获取
+class FDDataSource: NSObject {
     /// 默认获取所有的
     public class func getAlbums(supports: [PHAssetMediaType] = [.unknown, .image, .video, .audio], complete: @escaping ((_ datas: [FDAlbumModel]) -> Void)) {
         let myPhotoStream = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumMyPhotoStream, options: nil)
@@ -52,7 +53,7 @@ class DataSource: NSObject {
 }
 
 /// 转Model
-extension DataSource {
+extension FDDataSource {
     public class func assetModel(with asset: PHAsset) -> FDAssetModel {
         let suffix = self.assetSuffix(asset: asset)
         let duration = self.duration(with: Int(asset.duration))

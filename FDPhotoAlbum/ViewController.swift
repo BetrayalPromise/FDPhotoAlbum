@@ -38,5 +38,9 @@ extension ViewController: FDPhotoAlbumDelegate {
     func albumMaxVolume() -> Double {
         return 2
     }
+    
+    func albumEffect() -> AlbumEffect {
+        return .scan
+    }
 }
 

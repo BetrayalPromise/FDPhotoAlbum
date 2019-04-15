@@ -112,7 +112,6 @@ class FDAssetCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .red
         self.createUserInterface()
     }
     
@@ -251,6 +250,11 @@ class FDAssetCell: UICollectionViewCell {
                 }
             }
         }
+        let effect: AlbumEffect = FDPhotoAlbum.default.delegate?.albumEffect() ?? .normal
+        if effect == .scan {
+           self.selectButton?.isHidden = true
+            selectImageView?.isHidden = true
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -261,13 +265,6 @@ class FDAssetCell: UICollectionViewCell {
     func handle(button: UIButton) {
         self.delegate?.select(by: self, with: self.model)
         if self.model?.isSelected == true {
-//            let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-//            animation.fillMode = .forwards
-//            animation.isRemovedOnCompletion = false
-//            animation.duration = 3.0
-//            animation.values = [0.6, 0.8, 1.0, 1.2, 1.0, 0.9, 1.0]
-//            animation.calculationMode = .linear
-//            self.selectButton?.layer.add(animation, forKey: "animation")
             UIView.showAnimation(with: self.selectImageView?.layer ?? CALayer())
         }
     }
