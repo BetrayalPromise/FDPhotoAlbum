@@ -18,7 +18,7 @@ public class FDAssetModel: NSObject {
     public var suffix: String?
     public var selectedCount: Int = 0
     public var isSelected: Bool = false
-    public var resourceVolume: Int?
+    public var resourceVolume: Int = -1
     convenience init(asset: PHAsset?, duration: String?, suffix: String?) {
         self.init()
         self.asset = asset
@@ -30,17 +30,29 @@ public class FDAssetModel: NSObject {
             option.isSynchronous = true
             PHImageManager.default().requestImageData(for: asset, options: option) { [weak self](data, uti, orientation, info) in
                 guard let `self` = self else { return }
-                self.resourceVolume = data?.count
+                self.resourceVolume = data?.count ?? 0
             }
         } else if asset.mediaType == .video {
             let option: PHVideoRequestOptions = PHVideoRequestOptions()
             option.isNetworkAccessAllowed = true
+            debugPrint(pthread_self())
+            let semaphore: DispatchSemaphore = DispatchSemaphore(value: 1)
             PHImageManager.default().requestAVAsset(forVideo: asset, options: option) { (avasset, avaudioMix, info) in
                 if avasset?.isKind(of: AVURLAsset.classForCoder()) ?? false {
-                    let values = try? (avasset as? AVURLAsset)?.url.resourceValues(forKeys: Set<URLResourceKey>(arrayLiteral: .fileSizeKey))
-                    print(values)
+                    debugPrint(pthread_self())
+                    var values: URLResourceValues?
+                    do {
+                        values = try (avasset as? AVURLAsset)?.url.resourceValues(forKeys: Set<URLResourceKey>(arrayLiteral: .fileSizeKey))
+                    } catch {
+                        semaphore.signal()
+                        debugPrint(error)
+                        return
+                    }
+                    self.resourceVolume = values?.allValues[.fileSizeKey] as? Int ?? 0
+                    semaphore.signal()
                 }
             }
+            semaphore.wait()
         }
     }
 }

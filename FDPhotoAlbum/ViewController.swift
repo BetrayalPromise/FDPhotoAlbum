@@ -40,7 +40,7 @@ extension ViewController: FDPhotoAlbumDelegate {
     }
     
     func albumEffect() -> AlbumEffect {
-        return .scan
+        return .normal
     }
 }
 

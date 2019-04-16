@@ -48,7 +48,25 @@ class FDDataSource: NSObject {
         result.enumerateObjects { (asset, index, stop) in
             assets.append(self.assetModel(with: asset))
         }
+        let loop: RunLoop = RunLoop.current
+        repeat {
+            loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
+        } while (self.assignFlag(assets) == false)
         complete(assets)
+    }
+    
+    class func assignFlag(_ assets: [FDAssetModel]) -> Bool {
+        var result: Bool = false
+        for asset in assets {
+            if asset.resourceVolume == -1 {
+                result = false
+                break
+            } else {
+                result = true
+                continue
+            }
+        }
+        return result
     }
 }
 
