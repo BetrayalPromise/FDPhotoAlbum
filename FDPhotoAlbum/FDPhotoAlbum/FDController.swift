@@ -280,6 +280,8 @@ class FDAssetController: UIViewController {
                 } while (self.layoutFlag == false)
                 DispatchQueue.main.async {
                     self.collection?.reloadData()
+                    guard let count = self.models?.count, count > 0 else { return }
+                    self.collection?.scrollToItem(at: IndexPath(row: count - 1, section: 0), at: UICollectionView.ScrollPosition.bottom, animated: false)
                 }
             }.start()
         }
