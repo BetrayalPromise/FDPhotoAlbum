@@ -5,7 +5,6 @@ import Photos
 import FDFoundation
 
 class FDCollectionCell: UICollectionViewCell {
-    
     private var showImageView: UIImageView?
     private var nameLabel: UILabel?
     private var totalLabel: UILabel?
@@ -79,6 +78,10 @@ class FDCollectionCell: UICollectionViewCell {
                 }
             }
         }
+    }
+    
+    deinit {
+        print("\(self.classForCoder) deinit")
     }
 }
 
@@ -293,6 +296,10 @@ class FDAssetCell: UICollectionViewCell {
                 }
             }
         }
+    }
+    
+    deinit {
+        print("\(self.classForCoder) deinit")
     }
 }
 

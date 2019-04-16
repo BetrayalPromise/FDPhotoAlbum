@@ -124,6 +124,7 @@ class FDCollectionController: UIViewController {
                 loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
             } while (self.layoutFlag == false)
             DispatchQueue.main.async {
+                // TODO: 取消loading处理
                 if self.isAppearAsset ?? true {
                     let controller = FDAssetController(model: self.list?[0])
                     controller.title = self.list?[0].name
@@ -269,22 +270,25 @@ class FDAssetController: UIViewController {
     convenience init(model: FDAlbumModel?) {
         self.init()
         guard let result = model?.result else { return }
-        if model?.models == nil {
-            Thread {
+        Thread {
+            if model?.models == nil {
                 FDDataSource.getAssets(from: result) { (models) in
                     self.models = models
+                    model?.models = models
                 }
-                let loop = RunLoop.current
-                repeat {
-                    loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
-                } while (self.layoutFlag == false)
-                DispatchQueue.main.async {
-                    self.collection?.reloadData()
-                    guard let count = self.models?.count, count > 0 else { return }
-                    self.collection?.scrollToItem(at: IndexPath(row: count - 1, section: 0), at: UICollectionView.ScrollPosition.bottom, animated: false)
-                }
-            }.start()
-        }
+            } else {
+                self.models = model?.models
+            }
+            let loop = RunLoop.current
+            repeat {
+                loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.000000001)))
+            } while (self.layoutFlag == false)
+            DispatchQueue.main.async {
+                self.collection?.reloadData()
+                guard let count = self.models?.count, count > 0 else { return }
+                self.collection?.scrollToItem(at: IndexPath(row: count - 1, section: 0), at: UICollectionView.ScrollPosition.bottom, animated: false)
+            }
+        }.start()
     }
     
     override func viewDidLoad() {
@@ -411,7 +415,9 @@ class FDAssetController: UIViewController {
         let models = self.models?.filter({ (m) -> Bool in
             m.isSelected ? true : false
         })
-        FDPhotoAlbum.default.delegate?.albumFinish(selectedModels: models ?? [])
+        self.dismiss(animated: true, completion: {
+            FDPhotoAlbum.default.delegate?.albumFinish(selectedModels: models ?? [])
+        })
     }
     
     func updateBottomBar(value: Int) {
