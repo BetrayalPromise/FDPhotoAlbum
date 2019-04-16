@@ -16,7 +16,7 @@
 		F7483CD72244A8EC00E8B2BA /* FDModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CD62244A8EC00E8B2BA /* FDModel.swift */; };
 		F7483CDD22487FA400E8B2BA /* FDLeftFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CDC22487FA400E8B2BA /* FDLeftFlowLayout.swift */; };
 		F7483CDF2248802600E8B2BA /* FDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CDE2248802600E8B2BA /* FDCell.swift */; };
-		F7483CE122489C5600E8B2BA /* FDAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CE022489C5600E8B2BA /* FDAlbum.swift */; };
+		F7483CE122489C5600E8B2BA /* FDPhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7483CE022489C5600E8B2BA /* FDPhotoAlbum.swift */; };
 		F7C11D912249D48600F6107E /* Ablum.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F7C11D902249D48600F6107E /* Ablum.bundle */; };
 		F99E0B5B1A27D729F5111167E456E73D /* FDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE61A98EE50146FB97063B856BA414 /* FDController.swift */; };
 		FA771B98631F501E6093A94E6B64F20A /* FDDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D7FCE9810EB6D62035ED0099E7B1CE /* FDDataSource.swift */; };
@@ -38,7 +38,7 @@
 		F7483CD62244A8EC00E8B2BA /* FDModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDModel.swift; sourceTree = "<group>"; };
 		F7483CDC22487FA400E8B2BA /* FDLeftFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FDLeftFlowLayout.swift; sourceTree = "<group>"; };
 		F7483CDE2248802600E8B2BA /* FDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDCell.swift; sourceTree = "<group>"; };
-		F7483CE022489C5600E8B2BA /* FDAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDAlbum.swift; sourceTree = "<group>"; };
+		F7483CE022489C5600E8B2BA /* FDPhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FDPhotoAlbum.swift; sourceTree = "<group>"; };
 		F7C11D902249D48600F6107E /* Ablum.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Ablum.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,7 +114,7 @@
 				8DBE61A98EE50146FB97063B856BA414 /* FDController.swift */,
 				F7483CD62244A8EC00E8B2BA /* FDModel.swift */,
 				F7483CDE2248802600E8B2BA /* FDCell.swift */,
-				F7483CE022489C5600E8B2BA /* FDAlbum.swift */,
+				F7483CE022489C5600E8B2BA /* FDPhotoAlbum.swift */,
 			);
 			path = FDPhotoAlbum;
 			sourceTree = "<group>";
@@ -241,7 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F2247ED475D9A97ED21B2BDD223FB1B /* AppDelegate.swift in Sources */,
-				F7483CE122489C5600E8B2BA /* FDAlbum.swift in Sources */,
+				F7483CE122489C5600E8B2BA /* FDPhotoAlbum.swift in Sources */,
 				F7483CD72244A8EC00E8B2BA /* FDModel.swift in Sources */,
 				FA771B98631F501E6093A94E6B64F20A /* FDDataSource.swift in Sources */,
 				F7483CDD22487FA400E8B2BA /* FDLeftFlowLayout.swift in Sources */,

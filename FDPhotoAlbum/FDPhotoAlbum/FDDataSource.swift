@@ -50,7 +50,7 @@ class FDDataSource: NSObject {
         }
         let loop: RunLoop = RunLoop.current
         repeat {
-            loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.8)))
+            loop.run(mode: RunLoop.Mode.common, before: Date(timeIntervalSinceNow: TimeInterval(0.5)))
         } while (self.assignFlag(assets) == false)
         complete(assets)
     }

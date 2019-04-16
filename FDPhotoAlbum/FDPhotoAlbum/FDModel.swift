@@ -42,6 +42,7 @@ public class FDAssetModel: NSObject {
                             values = try (avasset as? AVURLAsset)?.url.resourceValues(forKeys: Set<URLResourceKey>(arrayLiteral: .fileSizeKey))
                         } catch {
                             debugPrint(error)
+                            self.resourceVolume = 0
                             return
                         }
                         self.resourceVolume = values?.allValues[.fileSizeKey] as? Int ?? 0
